@@ -3,10 +3,10 @@ The program management competition until championship,
 by get the points of the teams and return the winner. 
 
 Use of tools:
-* Java
-* OOP
-* MVC
-* Javafx
+* Programming language: "Java"
+* programming paradigm: "OOP"
+* Software design: "MVC"
+* software platform: "Javafx"
 
 HOW:
 * Insert 8 participants( could be names of people or names of teams)
