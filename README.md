@@ -6,7 +6,7 @@ Use of tools:
 * Java
 * OOP
 * MVC
-* javafx
+* Javafx
 
 HOW:
 * Insert 8 participants( could be names of people or names of teams)
