@@ -4,7 +4,7 @@ by get the points of the teams and return the winner.
 
 Use of tools:
 * Programming language: "Java"
-* programming paradigm: "OOP"
+* programming paradigm: "Object-oriented programming"(OOP)
 * Software design: "MVC"
 * software platform: "Javafx"
 
