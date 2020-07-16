@@ -3,7 +3,7 @@ The program management competition until championship,
 
 by get the points of the teams and return the winner.
 
-kind of game you can play:
+kind of game that you can play:
 * Tennis
 * Basketball
 * Soccer
