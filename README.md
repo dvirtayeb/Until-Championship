@@ -1,6 +1,12 @@
 # Until-Championship
 The program management competition until championship,
-by get the points of the teams and return the winner. 
+
+by get the points of the teams and return the winner.
+
+kind of game you can play:
+* Tennis
+* Basketball
+* Soccer
 
 Use of tools:
 * Programming language: "Java"
