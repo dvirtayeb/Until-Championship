@@ -14,7 +14,7 @@ Use of tools:
 * Software design: "MVC"
 * software platform: "Javafx"
 
-HOW:
+Operation:
 * Insert 8 participants( could be names of people or names of teams)
 * Press to "start Championship"
 * Insert the points of each comptition in the stage "Groups",for to insert points,press "Start-Game".
