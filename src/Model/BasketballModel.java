@@ -3,6 +3,7 @@ package Model;
 import java.util.ArrayList;
 
 public class BasketballModel extends Game {
+	// The index in the arrayList meant the round;
 
 	private ArrayList<Integer> firstParticipantsPoints;
 	private ArrayList<Integer> secondParticipantsPoints;
@@ -11,14 +12,13 @@ public class BasketballModel extends Game {
 		super(name);
 		firstParticipantsPoints = new ArrayList<>();
 		secondParticipantsPoints = new ArrayList<>();
-
 	}
 
 	public void addPointsToFirstparticipantList(Integer num) {
 		firstParticipantsPoints.add(num);
 	}
 
-	public void clearParticipantsPoints() {
+	public void clearParticipantPoints() {
 		firstParticipantsPoints.clear();
 		secondParticipantsPoints.clear();
 	}

@@ -17,22 +17,21 @@ import javafx.stage.Stage;
 
 public class Championship {
 	private VBox vb;
-	TreeTableView<Game> treeTableView;
+	private TreeTableView<Game> treeTableView;
 	private ArrayList<Button> allButton;
 	private TreeItem<Game> games;
 	private TreeItem<Game> groupGames;
 	private TreeItem<Game> quarterFinalsGames;
 	private TreeItem<Game> finalGames;
 	private Game game;
-	TreeItem<Game> gameItem;
+	private TreeItem<Game> gameItem;
 	private TreeItem<Game> gameItem2;
-	private ArrayList<TreeItem> treeItemList;
 	private TreeItem<Game> gameItem3;
 
 	public Championship(Stage seconderyStage, Model theModel) {
 		allButton = new ArrayList<Button>();
 		treeTableView = new TreeTableView<Game>();
-		treeItemList = new ArrayList<TreeItem>();
+//		treeItemList = new ArrayList<TreeItem>();
 		TreeTableColumn<Game, String> treeTableColumn1 = new TreeTableColumn<>("    Games						");
 		TreeTableColumn<Game, String> treeTableColumn2 = new TreeTableColumn<>("    Winner		");
 		TreeTableColumn<Game, String> treeTableColumn3 = new TreeTableColumn<>("	Start Game		");
@@ -106,10 +105,6 @@ public class Championship {
 
 	public ArrayList<Button> getAllButton() {
 		return allButton;
-	}
-
-	public ArrayList<TreeItem> getTreeItem() {
-		return treeItemList;
 	}
 
 	public Game getGame() {

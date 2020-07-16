@@ -113,7 +113,7 @@ public class Controller {
 
 	}
 
-	public boolean addParticipant() throws UserExceptions {
+	private boolean addParticipant() throws UserExceptions {
 		String participant = "" + theView.getTfParticipantName();
 		theModel.addParticipantToList(participant);
 		int participantsCounter = theView.getListView().getItems().size();
@@ -121,7 +121,8 @@ public class Controller {
 		return true;
 	}
 
-	public boolean startChampionshipFunction() throws UserExceptions {
+	private boolean startChampionshipFunction() throws UserExceptions {
+		theModel.clearWinnerList();
 		tennisModel = new TennisModel("Tennis");
 		basketBallModel = new BasketballModel("BasketBall");
 		SoccerModel = new SoccerModel("Soccer");
@@ -262,7 +263,7 @@ public class Controller {
 		return true;
 	}
 
-	public boolean startGame(String kindGame) {
+	private boolean startGame(String kindGame) {
 		// Page Tennis
 		if (kindGame.equals("Tennis")) {
 			startTennisGame = new Tennis(new Stage(), theModel, championship);
@@ -272,16 +273,10 @@ public class Controller {
 				public void handle(ActionEvent arg0) {
 					tennisModel.clearParticipantPoints();
 					noProblem = true;
-					tennisModel.addPointsToFirstparticipantList(startTennisGame.getFirstRoundTeam1());
-					tennisModel.addPointsToFirstparticipantList(startTennisGame.getSecondRoundTeam1());
-					tennisModel.addPointsToFirstparticipantList(startTennisGame.getThirdRoundTeam1());
-					tennisModel.addPointsToFirstparticipantList(startTennisGame.getFourthRoundTeam1());
-					tennisModel.addPointsToFirstparticipantList(startTennisGame.getFifthRoundTeam1());
-					tennisModel.addPointsToSecondparticipantList(startTennisGame.getFirstRoundTeam2());
-					tennisModel.addPointsToSecondparticipantList(startTennisGame.getSecondRoundTeam2());
-					tennisModel.addPointsToSecondparticipantList(startTennisGame.getThirdRoundTeam2());
-					tennisModel.addPointsToSecondparticipantList(startTennisGame.getFourthRoundTeam2());
-					tennisModel.addPointsToSecondparticipantList(startTennisGame.getFifthRoundTeam2());
+					for (int i = 0; i < 5; i++) {
+					tennisModel.addPointsToFirstparticipantList(startTennisGame.getPointFromTeam1(i));
+					tennisModel.addPointsToSecondparticipantList(startTennisGame.getPointFromTeam2(i));
+					}
 					theWinner = checkTennisResult();
 					updateTheWinner(theModel, theWinner);
 					int counter = 0;
@@ -314,7 +309,7 @@ public class Controller {
 
 				@Override
 				public void handle(ActionEvent arg0) {
-					basketBallModel.clearParticipantsPoints();
+					basketBallModel.clearParticipantPoints();
 					noProblem = true;
 					for (int i = 0; i < 4; i++) {
 						basketBallModel.addPointsToFirstparticipantList(startBasketBallGame.getPointFromTeam1(i));
@@ -342,29 +337,68 @@ public class Controller {
 					championship.update();
 					handleCloseButtonActionBasketball();
 				}
-
 			};
 			championship.addEventToSubmit(eventDoneBasketballGame, startBasketBallGame.getBtnDone());
 
 			// Page Soccer
 		} else {
 			startSoccerGame = new Soccer(new Stage(), theModel, championship);
+			EventHandler<ActionEvent> eventDoneSoccerGame = new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent arg0) {
+					SoccerModel.clearParticipantPoints();
+					noProblem = true;
+					for (int i = 0; i < 2; i++) {
+						SoccerModel.addPointsToFirstparticipantList(startSoccerGame.getPointFromTeam1(i));
+						SoccerModel.addPointsToSecondparticipantList(startSoccerGame.getPointFromTeam2(i));
+					}
+					theWinner = checkSoccerResualt();
+					updateTheWinner(theModel, theWinner);
+					int counter = 0;
+					for (int i = 0; i < theModel.getWinnerList().size(); i++) {
+						if (theModel.getWinnerList().get(i) != " ")
+							counter++;
+						if (counter == 4 && noProblem) {
+							finishGroupsGame = true;
+							updateTheQuarterFinalsGames(theModel, theWinner);
+							championship.update();
+						} else if (counter == 6 && noProblem) {
+							finishQuarterGames = true;
+							updateTheFinalGames(theModel, theWinner);
+							championship.update();
+						} else if (counter == 7 && noProblem) {
+							winner.setContentText("The winner is: " + theWinner);
+							winner.show();
+						}
+					}
+					championship.update();
+					handleCloseButtonActionSoccer();
+				}
+
+			};
+			championship.addEventToSubmit(eventDoneSoccerGame, startSoccerGame.getBtnDone());
 		}
 		return true;
 	}
 
-	public void handleCloseButtonActionTennis() { // close the points window (Tennis)
+	private void handleCloseButtonActionTennis() { // close the points window (Tennis)
 		Stage stage = (Stage) startTennisGame.getBtnDone().getScene().getWindow();
 		stage.close();
 	}
 
-	public void handleCloseButtonActionBasketball() { // close the points window (Basketball)
+	private void handleCloseButtonActionBasketball() { // close the points window (Basketball)
 		Stage stage = (Stage) startBasketBallGame.getBtnDone().getScene().getWindow();
+		stage.close();
+	}
+	
+	private void handleCloseButtonActionSoccer() { // close the points window (Soccer)
+		Stage stage = (Stage) startSoccerGame.getBtnDone().getScene().getWindow();
 		stage.close();
 	}
 
 	// Updates:
-	public boolean updateTheWinner(Model theModel, String name) {
+	private boolean updateTheWinner(Model theModel, String name) {
 		for (int i = 0; i < theModel.getGamesList().size(); i++) {
 			if (championship.getAllButton().get(theModel.getGamesList().get(i).getGameNumber()).getId().equals("gameOn")
 					&& noProblem) {
@@ -375,7 +409,7 @@ public class Controller {
 		return false;
 	}
 
-	public boolean updateTheQuarterFinalsGames(Model theModel, String name) {
+	private boolean updateTheQuarterFinalsGames(Model theModel, String name) {
 		theModel.getGamesList().get(4)
 				.setName(theModel.getWinnerList().get(8) + " VS " + theModel.getWinnerList().get(9));
 		theModel.getGamesList().get(5)
@@ -383,14 +417,14 @@ public class Controller {
 		return true;
 	}
 
-	public boolean updateTheFinalGames(Model theModel, String name) {
+	private boolean updateTheFinalGames(Model theModel, String name) {
 		theModel.getGamesList().get(6)
 				.setName(theModel.getWinnerList().get(12) + " VS " + theModel.getWinnerList().get(13));
 		return true;
 	}
 
 	// Check Winner functions (Tennis, Basketball, Soccer):
-	public String checkTennisResult() {
+	private String checkTennisResult() {
 		// Note : if the user doesn't insert number in each TextField its insert
 		// automatically zero.
 
@@ -440,11 +474,11 @@ public class Controller {
 		}
 
 		if (theFirstParticipantWin > theSecondParticipantWin) {
-			theModel.addToWinnerList(startTennisGame.getNameParticipant1());
-			return startTennisGame.getNameParticipant1();
+			theModel.addToWinnerList(startTennisGame.getParticipants().get(0).getText());
+			return startTennisGame.getParticipants().get(0).getText();
 		} else {
-			theModel.addToWinnerList(startTennisGame.getNameParticipant2());
-			return startTennisGame.getNameParticipant2();
+			theModel.addToWinnerList(startTennisGame.getParticipants().get(1).getText());
+			return startTennisGame.getParticipants().get(1).getText();
 		}
 
 	}
@@ -490,8 +524,38 @@ public class Controller {
 		}
 	}
 
-//	private String checkSoccerResualt() {
-
-//	}
-
+	private String checkSoccerResualt() {
+		// Note : if the user doesn't insert number in each TextField its insert
+		// automatically zero.
+		int theFirstParticipantWin = 0;
+		int theSecondParticipantWin = 0;
+		for (int i = 0; i < SoccerModel.getFirstParticipantsPoints().size(); i++) {
+			try {
+				if (SoccerModel.getFirstParticipantsPoints().get(i) < 0
+						|| SoccerModel.getSecondParticipantsPoints().get(i) < 0) {
+					noProblem = false;
+					throw new UserExceptions("you have to choose positive numbers");
+				}
+				// need to continue the terms of soccer......
+				
+			} catch (UserExceptions ue) {
+				err.setContentText("you have to choose positive numbers");
+				err.show();
+				return "-1";
+			}
+		
+			}
+		if (theFirstParticipantWin > theSecondParticipantWin) {
+			theModel.addToWinnerList(startSoccerGame.getParticipants().get(0).getText());
+			return startSoccerGame.getParticipants().get(0).getText();
+		} else if (theFirstParticipantWin == theSecondParticipantWin) {
+			noProblem = false;
+			err.setContentText("One of the Team has to Win.");
+			err.show();
+			return "Draw";
+		} else {
+			theModel.addToWinnerList(startSoccerGame.getParticipants().get(1).getText());
+			return startSoccerGame.getParticipants().get(1).getText();
+		}
+	}
 }

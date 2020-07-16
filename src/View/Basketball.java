@@ -69,8 +69,6 @@ public class Basketball {
 		pointsListSecondParticipants.add(new TextField());
 		pointsListSecondParticipants.add(new TextField());
 
-		btnDone = new Button("Done");
-
 		for (int i = 0; i < participants.size() - 1; i++) {
 			participant1 = new HBox(participants.get(i), pointsListFirstParticipants.get(0),
 					pointsListFirstParticipants.get(1), pointsListFirstParticipants.get(2),
@@ -79,6 +77,7 @@ public class Basketball {
 					pointsListSecondParticipants.get(1), pointsListSecondParticipants.get(2),
 					pointsListSecondParticipants.get(3));
 		}
+		btnDone = new Button("Done");
 		HBox hbDone = new HBox(btnDone);
 		vb = new VBox();
 		vb.getChildren().addAll(basketBallGame, participant1,participant2, hbDone, btnDone);
@@ -91,7 +90,7 @@ public class Basketball {
 		bp.setTop(vbTitle);
 		bp.setCenter(vb);
 		// New Scene
-		Scene scene = new Scene(bp, 400, 400);
+		Scene scene = new Scene(bp, 400, 300);
 		thirdStage.setTitle("Basketball Game");
 		thirdStage.setScene(scene);
 		thirdStage.show();

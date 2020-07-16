@@ -89,10 +89,53 @@ public class Soccer {
 		bp.setCenter(vb);
 		
 		// New Scene
-				Scene scene = new Scene(bp, 400, 400);
+				Scene scene = new Scene(bp, 400, 300);
 				thirdStage.setTitle("Soccer Game");
 				thirdStage.setScene(scene);
 				thirdStage.show();
+	}
+	
+	public ArrayList<Text> getParticipants() {
+		return participants;
+	}
+
+	public ArrayList<TextField> getPointsListFirstParticipants() {
+		return pointsListFirstParticipants;
+	}
+
+	public ArrayList<TextField> getPointsListSecondParticipants() {
+		return pointsListSecondParticipants;
+	}
+
+	public Button getBtnDone() {
+		return btnDone;
+	}
+
+	public int getPointFromTeam1(int i) {
+		try {
+			if (!pointsListFirstParticipants.get(i).getText().equals("")) {
+				return Integer.parseInt(pointsListFirstParticipants.get(i).getText());
+			}
+
+		} catch (Exception num) {
+			err.setContentText("You didn't insert correctally number, insert only postive numbers");
+			err.show();
+			return -1;
+		}
+		return 0;
+	}
+
+	public int getPointFromTeam2(int i) {
+		try {
+			if (!pointsListSecondParticipants.get(i).getText().equals(""))
+				return Integer.parseInt(pointsListSecondParticipants.get(i).getText());
+
+		} catch (Exception num) {
+			err.setContentText("You didn't insert correctally number, insert only postive numbers");
+			err.show();
+			return -1;
+		}
+		return 0;
 	}
 
 }

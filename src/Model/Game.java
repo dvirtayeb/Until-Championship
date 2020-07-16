@@ -78,5 +78,10 @@ public class Game {
 	public void setStartGame(Button startGame) {
 		this.startGame = startGame;
 	}
+	
+	public String toString() {
+		String str = name+", the Winner: "+winner+",Number Game: "+gameNumber;
+		return str;
+	}
 
 }

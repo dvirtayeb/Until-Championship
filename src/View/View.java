@@ -98,7 +98,7 @@ public class View {
 		bp.setRight(vbRight);
 
 		// New SCENE
-		Scene scene = new Scene(bp, 1000, 900);
+		Scene scene = new Scene(bp, 900, 500);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
