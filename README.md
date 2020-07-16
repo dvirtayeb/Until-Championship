@@ -1,5 +1,5 @@
 # Until-Championship
-The program mangement competition until championship,
+The program management competition until championship,
 by get the points of the teams and return the winner. 
 
 Use of tools:
