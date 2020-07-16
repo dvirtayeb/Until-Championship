@@ -16,4 +16,4 @@ HOW:
 * Insert the points of each comptition in the stage "QuarterGames", you will get the winner in the stage.
 * Now you get the final game, insert the points of the game and you will get the name of the winner.
 
-The compition over.
+The comptition over.
