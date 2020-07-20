@@ -2,14 +2,14 @@ package Model;
 
 import java.util.ArrayList;
 
-public class TennisModel extends Game {
+public class TennisModel extends SportGames {
 	// The index in the arrayList meant the round;
 	
 	private ArrayList<Integer> firstParticipantsPoints;
 	private ArrayList<Integer> secondParticipantsPoints;
 	
-	public TennisModel(String name) {
-		super(name);
+	public TennisModel(String typeGame, String name) {
+		super(typeGame,name);
 		firstParticipantsPoints = new ArrayList<>();
 		secondParticipantsPoints = new ArrayList<>();
 	}

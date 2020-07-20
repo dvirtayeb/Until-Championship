@@ -2,7 +2,7 @@ package View;
 
 import java.util.ArrayList;
 
-import Model.Game;
+import Model.SportGames;
 import Model.Model;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,33 +17,33 @@ import javafx.stage.Stage;
 
 public class Championship {
 	private VBox vb;
-	private TreeTableView<Game> treeTableView;
+	private TreeTableView<SportGames> treeTableView;
 	private ArrayList<Button> allButton;
-	private TreeItem<Game> games;
-	private TreeItem<Game> groupGames;
-	private TreeItem<Game> quarterFinalsGames;
-	private TreeItem<Game> finalGames;
-	private Game game;
-	private TreeItem<Game> gameItem;
-	private TreeItem<Game> gameItem2;
-	private TreeItem<Game> gameItem3;
+	private TreeItem<SportGames> games;
+	private TreeItem<SportGames> groupGames;
+	private TreeItem<SportGames> quarterFinalsGames;
+	private TreeItem<SportGames> finalGames;
+	private SportGames game;
+	private TreeItem<SportGames> gameItem;
+	private TreeItem<SportGames> gameItem2;
+	private TreeItem<SportGames> gameItem3;
 
 	public Championship(Stage seconderyStage, Model theModel) {
 		allButton = new ArrayList<Button>();
-		treeTableView = new TreeTableView<Game>();
+		treeTableView = new TreeTableView<SportGames>();
 //		treeItemList = new ArrayList<TreeItem>();
-		TreeTableColumn<Game, String> treeTableColumn1 = new TreeTableColumn<>("    Games						");
-		TreeTableColumn<Game, String> treeTableColumn2 = new TreeTableColumn<>("    Winner		");
-		TreeTableColumn<Game, String> treeTableColumn3 = new TreeTableColumn<>("	Start Game		");
+		TreeTableColumn<SportGames, String> treeTableColumn1 = new TreeTableColumn<>("    Games						");
+		TreeTableColumn<SportGames, String> treeTableColumn2 = new TreeTableColumn<>("    Winner		"+"\n(continue to next stage)");
+		TreeTableColumn<SportGames, String> treeTableColumn3 = new TreeTableColumn<>("	Start Game		");
 		treeTableColumn1.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
 		treeTableColumn2.setCellValueFactory(new TreeItemPropertyValueFactory<>("winner"));
 		treeTableColumn3.setCellValueFactory(new TreeItemPropertyValueFactory<>("startGame"));
 		treeTableView.getColumns().add(treeTableColumn1);
 		treeTableView.getColumns().add(treeTableColumn2);
 		treeTableView.getColumns().add(treeTableColumn3);
-		games = new TreeItem<Game>(new Game("Games"));
+		games = new TreeItem<SportGames>(new SportGames("Sport Games", "Sport - Games"));
 
-		groupGames = new TreeItem<Game>(new Game("Groups Games"));
+		groupGames = new TreeItem<SportGames>(new SportGames("Sport Games", "Quarter-finals-Games"));
 		games.getChildren().add(groupGames);
 		for (int i = 0; i < theModel.getParticipantsList().size() - 1; i++) {
 			allButton.add(new Button("Start-Game"));
@@ -51,29 +51,29 @@ public class Championship {
 		}
 		int counter = 0;
 		for (int i = 0; i < theModel.getParticipantsList().size() - 1; i = i + 2) {
-			game = new Game(theModel.getParticipantsList().get(i) + " VS " + theModel.getParticipantsList().get(i + 1),
+			game = new SportGames("Sport Games",theModel.getParticipantsList().get(i) + " VS " + theModel.getParticipantsList().get(i + 1),
 					"", allButton.get(i / 2), counter);
-			gameItem = new TreeItem<Game>(game);
+			gameItem = new TreeItem<SportGames>(game);
 			groupGames.getChildren().add(gameItem);
 			theModel.addGameToList(game); // or make array list of games and from the controller move to the model?
 			counter++;
 		}
-		quarterFinalsGames = new TreeItem<Game>(new Game("Quarter-Final-Games"));
+		quarterFinalsGames = new TreeItem<SportGames>(new SportGames("Sport Games","Semi-finals- Games"));
 		games.getChildren().add(quarterFinalsGames);
 		for (int i = 0; i < theModel.getWinnerList().size() - 6; i++) {
-			game = new Game(theModel.getWinnerList().get(i) + " VS " + theModel.getWinnerList().get(i + 1), "",
+			game = new SportGames("Sport Games",theModel.getWinnerList().get(i) + " VS " + theModel.getWinnerList().get(i + 1), "",
 					allButton.get((i + 4)), counter);
-			gameItem2 = new TreeItem<Game>(game);
+			gameItem2 = new TreeItem<SportGames>(game);
 			quarterFinalsGames.getChildren().add(gameItem2);
 			theModel.addGameToList(game);// or make array list of games and from the controller move to the model?
 			counter++;
 		}
-		finalGames = new TreeItem<Game>(new Game("Final-Game"));
+		finalGames = new TreeItem<SportGames>(new SportGames("Sport Games","Final-Stage-Game"));
 		games.getChildren().add(finalGames);
 		for (int i = 0; i < 1; i++) {
-			game = new Game(theModel.getWinnerList().get(i) + " VS " + theModel.getWinnerList().get(i + 1), "",
+			game = new SportGames("Sport Games",theModel.getWinnerList().get(i) + " VS " + theModel.getWinnerList().get(i + 1), "",
 					allButton.get((6)), counter);
-			gameItem3 = new TreeItem<Game>(game);
+			gameItem3 = new TreeItem<SportGames>(game);
 			finalGames.getChildren().add(gameItem3);
 			theModel.addGameToList(game);// or make array list of games and from the controller move to the model?
 			counter++;
@@ -107,11 +107,11 @@ public class Championship {
 		return allButton;
 	}
 
-	public Game getGame() {
+	public SportGames getGame() {
 		return game;
 	}
 
-	public void setGame(Game game) {
+	public void setGame(SportGames game) {
 		this.game = game;
 	}
 

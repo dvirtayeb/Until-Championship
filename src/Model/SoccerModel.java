@@ -2,14 +2,14 @@ package Model;
 
 import java.util.ArrayList;
 
-public class SoccerModel extends Game {
+public class SoccerModel extends SportGames {
 	// The index in the arrayList meant the round;
 	
 	private ArrayList<Integer> firstParticipantsPoints;
 	private ArrayList<Integer> secondParticipantsPoints;
 	
-	public SoccerModel(String name) {
-		super(name);
+	public SoccerModel(String typeGame, String name) {
+		super(typeGame,name);
 		firstParticipantsPoints = new ArrayList<>();
 		secondParticipantsPoints = new ArrayList<>();
 	}

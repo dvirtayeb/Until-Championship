@@ -2,6 +2,9 @@ package Controller;
 
 import Model.Model;
 import Model.TennisModel;
+
+import java.util.Optional;
+
 import Model.BasketballModel;
 import Model.SoccerModel;
 import Model.UserExceptions;
@@ -16,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Toggle;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert.AlertType;
@@ -29,13 +33,12 @@ public class Controller {
 
 	private static Alert err;
 	private static Alert begin;
-	private static Alert change;
+//	private static Alert change;
 	private static Alert winner;
 
-	private boolean finishGroupsGame = false;
 	private boolean finishQuarterGames = false;
+	private boolean finishSemiFinalsGames = false;
 	private boolean noProblem = true;
-	private boolean onlyOneGamePlayed = false;
 
 	private View theView;
 	private Championship championship;
@@ -51,8 +54,10 @@ public class Controller {
 		this.theView = theView;
 		kindGame = theView.getKindRB(); // Default
 		err = new Alert(AlertType.ERROR, "", ButtonType.OK);
-		begin = new Alert(AlertType.INFORMATION, "Let's start", ButtonType.OK);
-		change = new Alert(AlertType.INFORMATION, "The game changed", ButtonType.OK);
+		begin = new Alert(AlertType.INFORMATION, "Let's start, press on the arrow where 'Sport - Games' for to start"
+				+ "\n#Tip: you can decide who will comptition in the next stage by choosing which team to play first",
+				ButtonType.OK);
+//		change = new Alert(AlertType.INFORMATION, "The game changed", ButtonType.OK);
 		winner = new Alert(AlertType.INFORMATION, "The winner is: ", ButtonType.OK);
 
 		// Change Game : Tennis,Basketball,Soccer
@@ -62,7 +67,7 @@ public class Controller {
 			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
 				kindGame = theView.getKindRB();
 				theModel.updateGame(kindGame);
-				change.show();
+//				change.show();
 			}
 
 		};
@@ -123,9 +128,11 @@ public class Controller {
 
 	private boolean startChampionshipFunction() throws UserExceptions {
 		theModel.clearWinnerList();
-		tennisModel = new TennisModel("Tennis");
-		basketBallModel = new BasketballModel("BasketBall");
-		SoccerModel = new SoccerModel("Soccer");
+		tennisModel = new TennisModel("Sport - Games", "Tennis");
+		basketBallModel = new BasketballModel("Sport - Games", "BasketBall");
+		SoccerModel = new SoccerModel("Sport - Games", "Soccer");
+		kindGame = theView.getKindRB();
+		theModel.updateGame(kindGame);
 		for (int i = 0; i < 8; i++) {
 			theModel.addToWinnerList(" ");
 		}
@@ -143,7 +150,10 @@ public class Controller {
 				championship.getAllButton().get(3).setId("game4");
 				championship.getAllButton().get(4).setId("game5");
 				championship.getAllButton().get(5).setId("game6");
+//				if(!championship.getGame().isOneGamePlayed()) {
 				startGame(kindGame);
+//					championship.getGame().setOneGamePlayed(true);
+//				}
 
 			}
 
@@ -162,6 +172,8 @@ public class Controller {
 				championship.getAllButton().get(4).setId("game5");
 				championship.getAllButton().get(5).setId("game6");
 				startGame(kindGame);
+//					championship.getGame().setOneGamePlayed(true);
+
 			}
 
 		};
@@ -178,7 +190,10 @@ public class Controller {
 				championship.getAllButton().get(3).setId("game4");
 				championship.getAllButton().get(4).setId("game5");
 				championship.getAllButton().get(5).setId("game6");
+//				if(!championship.getGame().isOneGamePlayed()) {
 				startGame(kindGame);
+//					championship.getGame().setOneGamePlayed(true);
+//				}
 			}
 
 		};
@@ -195,10 +210,9 @@ public class Controller {
 				championship.getAllButton().get(3).setId("gameOn");
 				championship.getAllButton().get(4).setId("game5");
 				championship.getAllButton().get(5).setId("game6");
-//				if(!onlyOneGamePlayed)
+//				if(!championship.getGame().isOneGamePlayed()) {
 				startGame(kindGame);
-//				if(theModel.getWinnerList().get(8) !=" " || theModel.getWinnerList().get(8) !="Draw") {
-//					onlyOneGamePlayed = true;
+//					championship.getGame().setOneGamePlayed(true);
 //				}
 			}
 
@@ -216,8 +230,12 @@ public class Controller {
 				championship.getAllButton().get(3).setId("game4");
 				championship.getAllButton().get(4).setId("gameOn");
 				championship.getAllButton().get(5).setId("game6");
-				if (finishGroupsGame)
+				if (finishQuarterGames)
 					startGame(kindGame);
+				else {
+					err.setContentText("you have to finish the QuarterGames");
+					err.show();
+				}
 			}
 
 		};
@@ -234,8 +252,12 @@ public class Controller {
 				championship.getAllButton().get(3).setId("game4");
 				championship.getAllButton().get(4).setId("game5");
 				championship.getAllButton().get(5).setId("gameOn");
-				if (finishGroupsGame)
+				if (finishQuarterGames)
 					startGame(kindGame);
+				else {
+					err.setContentText("you have to finish the QuarterGames");
+					err.show();
+				}
 			}
 
 		};
@@ -253,8 +275,12 @@ public class Controller {
 				championship.getAllButton().get(4).setId("game5");
 				championship.getAllButton().get(5).setId("game6");
 				championship.getAllButton().get(6).setId("gameOn");
-				if (finishQuarterGames)
+				if (finishSemiFinalsGames)
 					startGame(kindGame);
+				else {
+					err.setContentText("you have to finish the Semi-Finals");
+					err.show();
+				}
 			}
 
 		};
@@ -274,8 +300,8 @@ public class Controller {
 					tennisModel.clearParticipantPoints();
 					noProblem = true;
 					for (int i = 0; i < 5; i++) {
-					tennisModel.addPointsToFirstparticipantList(startTennisGame.getPointFromTeam1(i));
-					tennisModel.addPointsToSecondparticipantList(startTennisGame.getPointFromTeam2(i));
+						tennisModel.addPointsToFirstparticipantList(startTennisGame.getPointFromTeam1(i));
+						tennisModel.addPointsToSecondparticipantList(startTennisGame.getPointFromTeam2(i));
 					}
 					theWinner = checkTennisResult();
 					updateTheWinner(theModel, theWinner);
@@ -284,11 +310,11 @@ public class Controller {
 						if (theModel.getWinnerList().get(i) != " ")
 							counter++;
 						if (counter == 4 && noProblem) {
-							finishGroupsGame = true;
+							finishQuarterGames = true;
 							updateTheQuarterFinalsGames(theModel, theWinner);
 							championship.update();
 						} else if (counter == 6 && noProblem) {
-							finishQuarterGames = true;
+							finishSemiFinalsGames = true;
 							updateTheFinalGames(theModel, theWinner);
 							championship.update();
 						} else if (counter == 7 && noProblem) {
@@ -322,11 +348,11 @@ public class Controller {
 						if (theModel.getWinnerList().get(i) != " ")
 							counter++;
 						if (counter == 4 && noProblem) {
-							finishGroupsGame = true;
+							finishQuarterGames = true;
 							updateTheQuarterFinalsGames(theModel, theWinner);
 							championship.update();
 						} else if (counter == 6 && noProblem) {
-							finishQuarterGames = true;
+							finishSemiFinalsGames = true;
 							updateTheFinalGames(theModel, theWinner);
 							championship.update();
 						} else if (counter == 7 && noProblem) {
@@ -360,11 +386,11 @@ public class Controller {
 						if (theModel.getWinnerList().get(i) != " ")
 							counter++;
 						if (counter == 4 && noProblem) {
-							finishGroupsGame = true;
+							finishQuarterGames = true;
 							updateTheQuarterFinalsGames(theModel, theWinner);
 							championship.update();
 						} else if (counter == 6 && noProblem) {
-							finishQuarterGames = true;
+							finishSemiFinalsGames = true;
 							updateTheFinalGames(theModel, theWinner);
 							championship.update();
 						} else if (counter == 7 && noProblem) {
@@ -391,19 +417,21 @@ public class Controller {
 		Stage stage = (Stage) startBasketBallGame.getBtnDone().getScene().getWindow();
 		stage.close();
 	}
-	
+
 	private void handleCloseButtonActionSoccer() { // close the points window (Soccer)
 		Stage stage = (Stage) startSoccerGame.getBtnDone().getScene().getWindow();
 		stage.close();
 	}
 
-	// Updates:
+	// NOTE: Updates:
 	private boolean updateTheWinner(Model theModel, String name) {
-		for (int i = 0; i < theModel.getGamesList().size(); i++) {
-			if (championship.getAllButton().get(theModel.getGamesList().get(i).getGameNumber()).getId().equals("gameOn")
-					&& noProblem) {
-				theModel.getGamesList().get(i).setWinner(name);
-				return true;
+		if (!name.equals("-1") || !name.equals("Draw")) {
+			for (int i = 0; i < theModel.getGamesList().size(); i++) {
+				if (championship.getAllButton().get(theModel.getGamesList().get(i).getGameNumber()).getId()
+						.equals("gameOn") && noProblem) {
+					theModel.getGamesList().get(i).setWinner(name);
+					return true;
+				}
 			}
 		}
 		return false;
@@ -423,7 +451,7 @@ public class Controller {
 		return true;
 	}
 
-	// Check Winner functions (Tennis, Basketball, Soccer):
+	// NOTE : Check Winner functions (Tennis, Basketball, Soccer):
 	private String checkTennisResult() {
 		// Note : if the user doesn't insert number in each TextField its insert
 		// automatically zero.
@@ -456,29 +484,32 @@ public class Controller {
 
 					} else
 						theFirstParticipantWin++;
-				} else {
-					noProblem = false;
-					throw new UserExceptions("you have to insert points difference by 3");
 				}
-
 			} catch (UserExceptions ue) {
 				if (tennisModel.getFirstParticipantsPoints().get(i) < 0) {
 					err.setContentText("you have to choose positive numbers");
-					err.show();
-				} else {
-					err.setContentText("you have to insert points difference by 3");
 					err.show();
 				}
 				return "-1";
 			}
 		}
-
-		if (theFirstParticipantWin > theSecondParticipantWin) {
-			theModel.addToWinnerList(startTennisGame.getParticipants().get(0).getText());
-			return startTennisGame.getParticipants().get(0).getText();
-		} else {
-			theModel.addToWinnerList(startTennisGame.getParticipants().get(1).getText());
-			return startTennisGame.getParticipants().get(1).getText();
+		try {
+			if (theFirstParticipantWin < 3 && theSecondParticipantWin < 3) {
+				noProblem = false;
+				throw new UserExceptions("The participant have to win by difference by 3");
+			} else {
+				if (theFirstParticipantWin > theSecondParticipantWin) {
+					theModel.addToWinnerList(startTennisGame.getParticipants().get(0).getText());
+					return startTennisGame.getParticipants().get(0).getText();
+				} else {
+					theModel.addToWinnerList(startTennisGame.getParticipants().get(1).getText());
+					return startTennisGame.getParticipants().get(1).getText();
+				}
+			}
+		} catch (UserExceptions ue1) {
+			err.setContentText("The participant have to win by difference by 3");
+			err.show();
+			return "-1";
 		}
 
 	}
@@ -535,16 +566,118 @@ public class Controller {
 						|| SoccerModel.getSecondParticipantsPoints().get(i) < 0) {
 					noProblem = false;
 					throw new UserExceptions("you have to choose positive numbers");
+				} else if (SoccerModel.getFirstParticipantsPoints().get(i) == SoccerModel.getSecondParticipantsPoints()
+						.get(i)) {
+
+				} else if (SoccerModel.getFirstParticipantsPoints().get(i) > SoccerModel.getSecondParticipantsPoints()
+						.get(i)) {
+					theFirstParticipantWin++;
+				} else if (SoccerModel.getFirstParticipantsPoints().get(i) < SoccerModel.getSecondParticipantsPoints()
+						.get(i)) {
+					theSecondParticipantWin++;
 				}
-				// need to continue the terms of soccer......
-				
+				if (theFirstParticipantWin > theSecondParticipantWin) {
+					theModel.addToWinnerList(startSoccerGame.getParticipants().get(0).getText());
+					return startSoccerGame.getParticipants().get(0).getText();
+				} else if (theFirstParticipantWin < theSecondParticipantWin) {
+					theModel.addToWinnerList(startSoccerGame.getParticipants().get(1).getText());
+					return startSoccerGame.getParticipants().get(1).getText();
+				} else {
+					// NOTE: Extra Time Match!
+					TextInputDialog dialog = new TextInputDialog("0");
+					TextInputDialog dialog2 = new TextInputDialog("0");
+					dialog.setTitle("Extra-Time");
+					dialog.setHeaderText("One more match, please insert points \nTeam 1:");
+					dialog2.setTitle("Extra-Time");
+					dialog2.setHeaderText("One more match, please insert points \nTeam 2:");
+					Optional<String> resultTeam1 = dialog.showAndWait();
+					int num = 0;
+					if (resultTeam1.isPresent()) {
+						try {
+							if (Integer.parseInt(resultTeam1.get()) < 0) {
+								noProblem = false;
+								throw new UserExceptions("you have to choose positive numbers");
+							}
+							num = Integer.parseInt(resultTeam1.get());
+						} catch (UserExceptions ue) {
+							err.setContentText("you have to choose positive numbers");
+							err.show();
+							return "-1";
+						} catch (Exception e) {
+							noProblem = false;
+							err.setContentText("you didn't insert a number..");
+							err.show();
+							return "-1";
+						}
+					}
+					Optional<String> resultTeam2 = dialog2.showAndWait();
+					int num2 = 0;
+					if (resultTeam2.isPresent()) {
+						try {
+							if (Integer.parseInt(resultTeam2.get()) < 0) {
+								noProblem = false;
+								throw new UserExceptions("you have to choose positive numbers");
+							}
+							num2 = Integer.parseInt(resultTeam2.get());
+						} catch (UserExceptions ue) {
+							err.setContentText("you have to choose positive numbers");
+							err.show();
+							return "-1";
+						} catch (Exception e) {
+							err.setContentText("you didn't insert a number..");
+							err.show();
+							return "-1";
+						}
+						if (num > num2) {
+							theFirstParticipantWin++;
+							theModel.addToWinnerList(startSoccerGame.getParticipants().get(0).getText());
+							return startSoccerGame.getParticipants().get(0).getText();
+						} else if (num < num2) {
+							theSecondParticipantWin++;
+							theModel.addToWinnerList(startSoccerGame.getParticipants().get(1).getText());
+							return startSoccerGame.getParticipants().get(1).getText();
+						} else {
+							// NOTE: Penalty Kicks !
+							int penaltyTeam1Score = 0;
+							int penaltyTeam2Score = 0;
+							Alert penaltyTeam1 = new Alert(AlertType.CONFIRMATION);
+							penaltyTeam1.setTitle("Penalty Kicks");
+							penaltyTeam1.setHeaderText("Penalty - Kicks Time!\nTeam1: did you score? ");
+							penaltyTeam1.setContentText("Choose your option, YES/NO ");
+
+							ButtonType buttonTypeOne = new ButtonType("YES");
+							ButtonType buttonTypeTwo = new ButtonType("NO");
+
+							penaltyTeam1.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+							do {
+								Optional<ButtonType> resultPenaltyTeam1 = penaltyTeam1.showAndWait();
+								if (resultPenaltyTeam1.get() == buttonTypeOne) {
+									penaltyTeam1Score++;
+								}
+								Alert penaltyTeam2 = new Alert(AlertType.CONFIRMATION);
+								penaltyTeam2.setTitle("Penalty Kicks");
+								penaltyTeam2.setHeaderText("Penalty - Kicks Time!\nTeam2: did you score? ");
+								penaltyTeam2.setContentText("Choose your option, YES/NO ");
+								penaltyTeam2.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+								Optional<ButtonType> resultPenaltyTeam2 = penaltyTeam2.showAndWait();
+								if (resultPenaltyTeam2.get() == buttonTypeOne) {
+									penaltyTeam2Score++;
+								}
+								if (penaltyTeam1Score > penaltyTeam2Score) {
+									theFirstParticipantWin++;
+								} else if (penaltyTeam1Score < penaltyTeam2Score) {
+									theSecondParticipantWin++;
+								}
+							} while (penaltyTeam1Score == penaltyTeam2Score);
+						}
+					}
+				}
 			} catch (UserExceptions ue) {
 				err.setContentText("you have to choose positive numbers");
 				err.show();
 				return "-1";
 			}
-		
-			}
+		}
 		if (theFirstParticipantWin > theSecondParticipantWin) {
 			theModel.addToWinnerList(startSoccerGame.getParticipants().get(0).getText());
 			return startSoccerGame.getParticipants().get(0).getText();

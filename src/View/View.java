@@ -57,6 +57,9 @@ public class View {
 		hbSubmit.setAlignment(Pos.CENTER);
 
 		// location: RIGHT
+		Text changeGame = new Text("choose the Game:   ");
+		HBox hbChangeGame = new HBox();
+		hbChangeGame.getChildren().addAll(changeGame);
 		tg = new ToggleGroup();
 		rbTenis = new RadioButton("Tennis");
 		rbTenis.setSelected(true);
@@ -87,7 +90,7 @@ public class View {
 		vbCenter.setAlignment(Pos.CENTER);
 
 		VBox vbRight = new VBox();
-		vbRight.getChildren().addAll(hb1, hb2, hb3);
+		vbRight.getChildren().addAll(hbChangeGame,hb1, hb2, hb3);
 		vbRight.setAlignment(Pos.CENTER_RIGHT);
 
 		// border pane

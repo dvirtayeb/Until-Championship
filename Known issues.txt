@@ -3,4 +3,4 @@ Known Issues:
 1. 	participant name: the user can think up what ever he want for the name of the team/player,
 	i'm just aiming the user.
 
-2.
+2.	the quarter stage, arranged by the order of the click that the user click. 

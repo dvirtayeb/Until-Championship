@@ -2,36 +2,34 @@ package Model;
 
 import java.util.ArrayList;
 
-import javafx.scene.layout.BorderPane;
-
 public class Model {
 	private Game theGame;
 	private ArrayList<String> participantsList;
-	private ArrayList<Game> gamesList;
+	private ArrayList<SportGames> gamesList;
 	private ArrayList<String> winnerList;
 	private String kindGame;
 
 	public Model() {
-		theGame = new Game("Game");
+		theGame = new SportGames("Sport - Games","Sport - Games");
 		participantsList = new ArrayList<>();
 		gamesList = new ArrayList<>();
 
 		winnerList = new ArrayList<>();
 	}
 
-	public void setGame(String name, boolean value) {
-		theGame.setGame(name, value);
+	public void setGame(String name) {
+		theGame.setGame(name);
 	}
 
 	public void updateGame(String kindGame) {
 		if (kindGame == "Tennis") {
 			this.kindGame = "Tennis";
-			theGame = new TennisModel("Tennis");
+			theGame = new TennisModel("Sport - Games","Tennis");
 		} else if (kindGame == "BasketBall") {
-			theGame = new BasketballModel("BasketBall");
+			theGame = new BasketballModel("Sport - Games","BasketBall");
 			this.kindGame = "BasketBall";
 		} else if (kindGame == "Soccer") {
-			theGame = new SoccerModel("Soccer");
+			theGame = new SoccerModel("Sport - Games","Soccer");
 			this.kindGame = "Soccer";
 		}
 	}
@@ -53,11 +51,11 @@ public class Model {
 		return counter;
 	}
 
-	public void addGameToList(Game game) {
+	public void addGameToList(SportGames game) {
 		gamesList.add(game);
 	}
 
-	public ArrayList<Game> getGamesList() {
+	public ArrayList<SportGames> getGamesList() {
 		return gamesList;
 	}
 
