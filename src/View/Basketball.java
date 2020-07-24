@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Basketball {
+public class Basketball implements GameViewUI {
 	private ArrayList<Text> participants;
 	private ArrayList<TextField> pointsListFirstParticipants;
 	private ArrayList<TextField> pointsListSecondParticipants;
@@ -80,7 +80,7 @@ public class Basketball {
 		btnDone = new Button("Done");
 		HBox hbDone = new HBox(btnDone);
 		vb = new VBox();
-		vb.getChildren().addAll(basketBallGame, participant1,participant2, hbDone, btnDone);
+		vb.getChildren().addAll(basketBallGame, participant1, participant2, hbDone, btnDone);
 		vb.setAlignment(Pos.CENTER);
 
 		vbTitle = new VBox();
@@ -89,6 +89,7 @@ public class Basketball {
 		bp = new BorderPane();
 		bp.setTop(vbTitle);
 		bp.setCenter(vb);
+
 		// New Scene
 		Scene scene = new Scene(bp, 400, 300);
 		thirdStage.setTitle("Basketball Game");
@@ -111,25 +112,13 @@ public class Basketball {
 	public Button getBtnDone() {
 		return btnDone;
 	}
+
 	public int getPointFromTeam1(int i) {
 		try {
-				if (!pointsListFirstParticipants.get(i).getText().equals("")) {
-					return Integer.parseInt(pointsListFirstParticipants.get(i).getText());
-				}
-			
-		} catch (Exception num) {
-			err.setContentText("You didn't insert correctally number, insert only postive numbers");
-			err.show();
-			return -1;
-		}
-		return 0;
-	}
-	
-	public int getPointFromTeam2(int i) {
-		try {
-				if (!pointsListSecondParticipants.get(i).getText().equals(""))
-					return Integer.parseInt(pointsListSecondParticipants.get(i).getText());
-				
+			if (!pointsListFirstParticipants.get(i).getText().equals("")) {
+				return Integer.parseInt(pointsListFirstParticipants.get(i).getText());
+			}
+
 		} catch (Exception num) {
 			err.setContentText("You didn't insert correctally number, insert only postive numbers");
 			err.show();
@@ -138,4 +127,16 @@ public class Basketball {
 		return 0;
 	}
 
+	public int getPointFromTeam2(int i) {
+		try {
+			if (!pointsListSecondParticipants.get(i).getText().equals(""))
+				return Integer.parseInt(pointsListSecondParticipants.get(i).getText());
+
+		} catch (Exception num) {
+			err.setContentText("You didn't insert correctally number, insert only postive numbers");
+			err.show();
+			return -1;
+		}
+		return 0;
+	}
 }

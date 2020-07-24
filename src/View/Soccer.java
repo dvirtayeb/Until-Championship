@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Soccer {
+public class Soccer implements GameViewUI {
 
 	private ArrayList<Text> participants;
 	private ArrayList<TextField> pointsListFirstParticipants;
@@ -32,7 +32,7 @@ public class Soccer {
 	private VBox vbTitle;
 
 	public Soccer(Stage thirdStage, Model theModel, Championship champ) {
-		
+
 		Text SoccerGame = new Text("Soccer Game");
 		err = new Alert(AlertType.ERROR, "", ButtonType.OK);
 		participants = new ArrayList<>();
@@ -60,41 +60,41 @@ public class Soccer {
 			participants.add(new Text(theModel.getWinnerList().get(12)));
 			participants.add(new Text(theModel.getWinnerList().get(13)));
 		}
-		
+
 		pointsListFirstParticipants.add(new TextField());
 		pointsListFirstParticipants.add(new TextField());
-		
+
 		pointsListSecondParticipants.add(new TextField());
 		pointsListSecondParticipants.add(new TextField());
-		
+
 		btnDone = new Button("Done");
-		
+
 		for (int i = 0; i < participants.size() - 1; i++) {
 			participant1 = new HBox(participants.get(i), pointsListFirstParticipants.get(0),
 					pointsListFirstParticipants.get(1));
 			participant2 = new HBox(participants.get(i + 1), pointsListSecondParticipants.get(0),
 					pointsListSecondParticipants.get(1));
 		}
-		
+
 		HBox hbDone = new HBox(btnDone);
 		vb = new VBox();
-		vb.getChildren().addAll(SoccerGame, participant1,participant2, hbDone, btnDone);
+		vb.getChildren().addAll(SoccerGame, participant1, participant2, hbDone, btnDone);
 		vb.setAlignment(Pos.CENTER);
-		
+
 		vbTitle = new VBox();
 		vbTitle.getChildren().add(SoccerGame);
 
 		bp = new BorderPane();
 		bp.setTop(vbTitle);
 		bp.setCenter(vb);
-		
+
 		// New Scene
-				Scene scene = new Scene(bp, 400, 300);
-				thirdStage.setTitle("Soccer Game");
-				thirdStage.setScene(scene);
-				thirdStage.show();
+		Scene scene = new Scene(bp, 400, 300);
+		thirdStage.setTitle("Soccer Game");
+		thirdStage.setScene(scene);
+		thirdStage.show();
 	}
-	
+
 	public ArrayList<Text> getParticipants() {
 		return participants;
 	}
@@ -118,7 +118,7 @@ public class Soccer {
 			}
 
 		} catch (Exception num) {
-			err.setContentText("You didn't insert correctally number, insert only postive numbers");
+			err.setContentText("You didn't insert correctally number, insert only postive numbers (1)");
 			err.show();
 			return -1;
 		}
@@ -131,7 +131,7 @@ public class Soccer {
 				return Integer.parseInt(pointsListSecondParticipants.get(i).getText());
 
 		} catch (Exception num) {
-			err.setContentText("You didn't insert correctally number, insert only postive numbers");
+			err.setContentText("You didn't insert correctally number, insert only postive numbers (2)");
 			err.show();
 			return -1;
 		}

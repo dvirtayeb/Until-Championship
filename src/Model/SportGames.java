@@ -13,6 +13,8 @@ public class SportGames extends Game {
 	protected int gameNumber;
 	private boolean oneGamePlayed = false;
 
+	protected String participant1, participant2;
+
 	public SportGames(String typeGame,String kindSportGame) {
 		super(typeGame);
 		nameOfSportGame = kindSportGame;
@@ -27,6 +29,8 @@ public class SportGames extends Game {
 		oneGamePlayed = false;
 	}
 
+	
+	
 	public void setGame(String name) {
 		switch (name) {
 		case "Tennis":
@@ -86,10 +90,17 @@ public class SportGames extends Game {
 	public void setOneGamePlayed(boolean oneGamePlayed) {
 		this.oneGamePlayed = oneGamePlayed;
 	}
+	
 
 	public String toString() {
 		String str = nameOfSportGame+", the Winner: "+winner+",Number Game: "+gameNumber;
 		return str;
 	}
+	
+	public void setParticipants(String participant1, String participant2) {
+		this.participant1 = participant1;
+		this.participant2 = participant2;
+	}
+
 
 }

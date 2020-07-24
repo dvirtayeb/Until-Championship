@@ -31,7 +31,6 @@ public class Championship {
 	public Championship(Stage seconderyStage, Model theModel) {
 		allButton = new ArrayList<Button>();
 		treeTableView = new TreeTableView<SportGames>();
-//		treeItemList = new ArrayList<TreeItem>();
 		TreeTableColumn<SportGames, String> treeTableColumn1 = new TreeTableColumn<>("    Games						");
 		TreeTableColumn<SportGames, String> treeTableColumn2 = new TreeTableColumn<>("    Winner		"+"\n(continue to next stage)");
 		TreeTableColumn<SportGames, String> treeTableColumn3 = new TreeTableColumn<>("	Start Game		");

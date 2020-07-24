@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Tennis {
+public class Tennis implements GameViewUI {
 	private ArrayList<Text> participants;
 	private ArrayList<TextField> pointsListFirstParticipants;
 	private ArrayList<TextField> pointsListSecondParticipants;

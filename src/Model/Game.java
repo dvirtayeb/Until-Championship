@@ -13,6 +13,5 @@ public abstract class Game {
 	public void setGame(String name) {
 		this.typeGame = name;
 	}
-	
 
 }
