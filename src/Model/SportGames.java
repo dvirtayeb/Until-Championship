@@ -86,6 +86,7 @@ public class SportGames extends Game {
 	public void setOneGamePlayed(boolean oneGamePlayed) {
 		this.oneGamePlayed = oneGamePlayed;
 	}
+	
 
 	public String toString() {
 		String str = nameOfSportGame+", the Winner: "+winner+",Number Game: "+gameNumber;

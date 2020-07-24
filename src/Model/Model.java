@@ -74,6 +74,9 @@ public class Model {
 	public ArrayList<String> getWinnerList() {
 		return winnerList;
 	}
+	public void clearGameList() {
+		gamesList.clear();
+	}
 
 	public String getKindGame() {
 		return kindGame;

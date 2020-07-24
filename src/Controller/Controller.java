@@ -2,9 +2,7 @@ package Controller;
 
 import Model.Model;
 import Model.TennisModel;
-
 import java.util.Optional;
-
 import Model.BasketballModel;
 import Model.SoccerModel;
 import Model.UserExceptions;
@@ -33,7 +31,7 @@ public class Controller {
 
 	private static Alert err;
 	private static Alert begin;
-//	private static Alert change;
+	private static Alert change;
 	private static Alert winner;
 
 	private boolean finishQuarterGames = false;
@@ -54,10 +52,11 @@ public class Controller {
 		this.theView = theView;
 		kindGame = theView.getKindRB(); // Default
 		err = new Alert(AlertType.ERROR, "", ButtonType.OK);
-		begin = new Alert(AlertType.INFORMATION, "Let's start, press on the arrow where 'Sport - Games' for to start"
-				+ "\n#Tip: you can decide who will comptition in the next stage by choosing which team to play first",
-				ButtonType.OK);
-//		change = new Alert(AlertType.INFORMATION, "The game changed", ButtonType.OK);
+		begin = new Alert(AlertType.INFORMATION, "", ButtonType.OK);
+		begin.setTitle("Instructions");
+		begin.setHeaderText("Lets Start, Press double click on 'Sport - Games' for to start"
+				+ "\n# Tip: You can decide who will competition in the next stage,\nby choosing which team will play first");
+		change = new Alert(AlertType.INFORMATION, "The game changed", ButtonType.OK);
 		winner = new Alert(AlertType.INFORMATION, "The winner is: ", ButtonType.OK);
 
 		// Change Game : Tennis,Basketball,Soccer
@@ -67,7 +66,7 @@ public class Controller {
 			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
 				kindGame = theView.getKindRB();
 				theModel.updateGame(kindGame);
-//				change.show();
+				change.show();
 			}
 
 		};
@@ -120,6 +119,11 @@ public class Controller {
 
 	private boolean addParticipant() throws UserExceptions {
 		String participant = "" + theView.getTfParticipantName();
+		if (participant.equals("") || participant.charAt(0) == ' ') {
+			err.setContentText("You didn't insert participant correctly. Insret again.");
+			err.show();
+			return false;
+		}
 		theModel.addParticipantToList(participant);
 		int participantsCounter = theView.getListView().getItems().size();
 		theView.addListView(theModel.getParticipantsList().get(participantsCounter));
@@ -128,6 +132,7 @@ public class Controller {
 
 	private boolean startChampionshipFunction() throws UserExceptions {
 		theModel.clearWinnerList();
+		theModel.clearGameList();
 		tennisModel = new TennisModel("Sport - Games", "Tennis");
 		basketBallModel = new BasketballModel("Sport - Games", "BasketBall");
 		SoccerModel = new SoccerModel("Sport - Games", "Soccer");
@@ -150,10 +155,10 @@ public class Controller {
 				championship.getAllButton().get(3).setId("game4");
 				championship.getAllButton().get(4).setId("game5");
 				championship.getAllButton().get(5).setId("game6");
-//				if(!championship.getGame().isOneGamePlayed()) {
-				startGame(kindGame);
-//					championship.getGame().setOneGamePlayed(true);
-//				}
+				championship.update();
+				if(theModel.getGamesList().get(0).getWinner().equals("")) {
+					startGame(kindGame);
+				}
 
 			}
 
@@ -171,8 +176,9 @@ public class Controller {
 				championship.getAllButton().get(3).setId("game4");
 				championship.getAllButton().get(4).setId("game5");
 				championship.getAllButton().get(5).setId("game6");
-				startGame(kindGame);
-//					championship.getGame().setOneGamePlayed(true);
+				if(theModel.getGamesList().get(1).getWinner().equals("")) {
+					startGame(kindGame);
+				}
 
 			}
 
@@ -190,10 +196,9 @@ public class Controller {
 				championship.getAllButton().get(3).setId("game4");
 				championship.getAllButton().get(4).setId("game5");
 				championship.getAllButton().get(5).setId("game6");
-//				if(!championship.getGame().isOneGamePlayed()) {
-				startGame(kindGame);
-//					championship.getGame().setOneGamePlayed(true);
-//				}
+				if(theModel.getGamesList().get(2).getWinner().equals("")) {
+					startGame(kindGame);
+				}
 			}
 
 		};
@@ -210,10 +215,9 @@ public class Controller {
 				championship.getAllButton().get(3).setId("gameOn");
 				championship.getAllButton().get(4).setId("game5");
 				championship.getAllButton().get(5).setId("game6");
-//				if(!championship.getGame().isOneGamePlayed()) {
-				startGame(kindGame);
-//					championship.getGame().setOneGamePlayed(true);
-//				}
+				if(theModel.getGamesList().get(3).getWinner().equals("")) {
+					startGame(kindGame);
+				}
 			}
 
 		};
@@ -230,11 +234,13 @@ public class Controller {
 				championship.getAllButton().get(3).setId("game4");
 				championship.getAllButton().get(4).setId("gameOn");
 				championship.getAllButton().get(5).setId("game6");
-				if (finishQuarterGames)
-					startGame(kindGame);
-				else {
-					err.setContentText("you have to finish the QuarterGames");
-					err.show();
+				if(theModel.getGamesList().get(4).getWinner().equals("")) {
+					if (finishQuarterGames)
+						startGame(kindGame);
+					else {
+						err.setContentText("you have to finish the QuarterGames");
+						err.show();
+					}
 				}
 			}
 
@@ -252,11 +258,13 @@ public class Controller {
 				championship.getAllButton().get(3).setId("game4");
 				championship.getAllButton().get(4).setId("game5");
 				championship.getAllButton().get(5).setId("gameOn");
-				if (finishQuarterGames)
-					startGame(kindGame);
-				else {
-					err.setContentText("you have to finish the QuarterGames");
-					err.show();
+				if(theModel.getGamesList().get(5).getWinner().equals("")) {
+					if (finishQuarterGames)
+						startGame(kindGame);
+					else {
+						err.setContentText("you have to finish the QuarterGames");
+						err.show();
+					}
 				}
 			}
 
@@ -275,11 +283,13 @@ public class Controller {
 				championship.getAllButton().get(4).setId("game5");
 				championship.getAllButton().get(5).setId("game6");
 				championship.getAllButton().get(6).setId("gameOn");
-				if (finishSemiFinalsGames)
-					startGame(kindGame);
-				else {
-					err.setContentText("you have to finish the Semi-Finals");
-					err.show();
+				if(theModel.getGamesList().get(6).getWinner().equals("")) {
+					if (finishSemiFinalsGames)
+						startGame(kindGame);
+					else {
+						err.setContentText("you have to finish the Semi-Finals");
+						err.show();
+					}
 				}
 			}
 
@@ -303,27 +313,14 @@ public class Controller {
 						tennisModel.addPointsToFirstparticipantList(startTennisGame.getPointFromTeam1(i));
 						tennisModel.addPointsToSecondparticipantList(startTennisGame.getPointFromTeam2(i));
 					}
-					theWinner = checkTennisResult();
-					updateTheWinner(theModel, theWinner);
-					int counter = 0;
-					for (int i = 0; i < theModel.getWinnerList().size(); i++) {
-						if (theModel.getWinnerList().get(i) != " ")
-							counter++;
-						if (counter == 4 && noProblem) {
-							finishQuarterGames = true;
-							updateTheQuarterFinalsGames(theModel, theWinner);
-							championship.update();
-						} else if (counter == 6 && noProblem) {
-							finishSemiFinalsGames = true;
-							updateTheFinalGames(theModel, theWinner);
-							championship.update();
-						} else if (counter == 7 && noProblem) {
-							winner.setContentText("The winner is: " + theWinner);
-							winner.show();
-						}
+					String temp = checkTennisResult();
+					if(theWinner != temp) {
+						theWinner = temp;
+						theModel.addToWinnerList(theWinner);
+						updateTheWinner(theWinner);
+						updateGames();
 					}
-					championship.update();
-					handleCloseButtonActionTennis();
+					handleCloseButtonActionGame();
 				}
 			};
 			championship.addEventToSubmit(eventDoneTennisGame, startTennisGame.getBtnDone());
@@ -341,27 +338,14 @@ public class Controller {
 						basketBallModel.addPointsToFirstparticipantList(startBasketBallGame.getPointFromTeam1(i));
 						basketBallModel.addPointsToSecondparticipantList(startBasketBallGame.getPointFromTeam2(i));
 					}
-					theWinner = checkBasketBallResualt();
-					updateTheWinner(theModel, theWinner);
-					int counter = 0;
-					for (int i = 0; i < theModel.getWinnerList().size(); i++) {
-						if (theModel.getWinnerList().get(i) != " ")
-							counter++;
-						if (counter == 4 && noProblem) {
-							finishQuarterGames = true;
-							updateTheQuarterFinalsGames(theModel, theWinner);
-							championship.update();
-						} else if (counter == 6 && noProblem) {
-							finishSemiFinalsGames = true;
-							updateTheFinalGames(theModel, theWinner);
-							championship.update();
-						} else if (counter == 7 && noProblem) {
-							winner.setContentText("The winner is: " + theWinner);
-							winner.show();
-						}
+					String temp = checkBasketBallResualt();
+					if(theWinner != temp) {
+						theWinner = temp;
+						theModel.addToWinnerList(theWinner);
+						updateTheWinner(theWinner);
+						updateGames();
 					}
-					championship.update();
-					handleCloseButtonActionBasketball();
+					handleCloseButtonActionGame();
 				}
 			};
 			championship.addEventToSubmit(eventDoneBasketballGame, startBasketBallGame.getBtnDone());
@@ -379,27 +363,14 @@ public class Controller {
 						SoccerModel.addPointsToFirstparticipantList(startSoccerGame.getPointFromTeam1(i));
 						SoccerModel.addPointsToSecondparticipantList(startSoccerGame.getPointFromTeam2(i));
 					}
-					theWinner = checkSoccerResualt();
-					updateTheWinner(theModel, theWinner);
-					int counter = 0;
-					for (int i = 0; i < theModel.getWinnerList().size(); i++) {
-						if (theModel.getWinnerList().get(i) != " ")
-							counter++;
-						if (counter == 4 && noProblem) {
-							finishQuarterGames = true;
-							updateTheQuarterFinalsGames(theModel, theWinner);
-							championship.update();
-						} else if (counter == 6 && noProblem) {
-							finishSemiFinalsGames = true;
-							updateTheFinalGames(theModel, theWinner);
-							championship.update();
-						} else if (counter == 7 && noProblem) {
-							winner.setContentText("The winner is: " + theWinner);
-							winner.show();
-						}
+					String temp = checkSoccerResualt();
+					if(theWinner != temp) {
+						theWinner = temp;
+						theModel.addToWinnerList(theWinner);
+						updateTheWinner(theWinner);
+						updateGames();
 					}
-					championship.update();
-					handleCloseButtonActionSoccer();
+					handleCloseButtonActionGame();
 				}
 
 			};
@@ -407,24 +378,24 @@ public class Controller {
 		}
 		return true;
 	}
-
-	private void handleCloseButtonActionTennis() { // close the points window (Tennis)
-		Stage stage = (Stage) startTennisGame.getBtnDone().getScene().getWindow();
-		stage.close();
+	// NOTE: Close Windows:
+	private void handleCloseButtonActionGame() {
+		if(theModel.getKindGame().equals("Tennis")) {
+			Stage stage = (Stage) startTennisGame.getBtnDone().getScene().getWindow();
+			stage.close();
+		}
+		else if(theModel.getKindGame().equals("BasketBall")) {
+			Stage stage = (Stage) startBasketBallGame.getBtnDone().getScene().getWindow();
+			stage.close();
+		}else {
+			Stage stage = (Stage) startSoccerGame.getBtnDone().getScene().getWindow();
+			stage.close();
+		}
+			
 	}
-
-	private void handleCloseButtonActionBasketball() { // close the points window (Basketball)
-		Stage stage = (Stage) startBasketBallGame.getBtnDone().getScene().getWindow();
-		stage.close();
-	}
-
-	private void handleCloseButtonActionSoccer() { // close the points window (Soccer)
-		Stage stage = (Stage) startSoccerGame.getBtnDone().getScene().getWindow();
-		stage.close();
-	}
-
+	
 	// NOTE: Updates:
-	private boolean updateTheWinner(Model theModel, String name) {
+	private boolean updateTheWinner(String name) {
 		if (!name.equals("-1") || !name.equals("Draw")) {
 			for (int i = 0; i < theModel.getGamesList().size(); i++) {
 				if (championship.getAllButton().get(theModel.getGamesList().get(i).getGameNumber()).getId()
@@ -437,7 +408,7 @@ public class Controller {
 		return false;
 	}
 
-	private boolean updateTheQuarterFinalsGames(Model theModel, String name) {
+	private boolean updateTheQuarterFinalsGames(String name) {
 		theModel.getGamesList().get(4)
 				.setName(theModel.getWinnerList().get(8) + " VS " + theModel.getWinnerList().get(9));
 		theModel.getGamesList().get(5)
@@ -445,10 +416,34 @@ public class Controller {
 		return true;
 	}
 
-	private boolean updateTheFinalGames(Model theModel, String name) {
+	private boolean updateTheFinalGames(String name) {
 		theModel.getGamesList().get(6)
 				.setName(theModel.getWinnerList().get(12) + " VS " + theModel.getWinnerList().get(13));
 		return true;
+	}
+
+	private boolean updateGames() {
+		int counter = 0;
+		championship.update();
+		for (int i = 0; i < theModel.getWinnerList().size(); i++) {
+			if (theModel.getWinnerList().get(i) != " ")
+				counter++;
+			if (counter == 4 && noProblem) {
+				finishQuarterGames = true;
+				updateTheQuarterFinalsGames(theWinner);
+				championship.update();
+			} else if (counter == 6 && noProblem) {
+				finishSemiFinalsGames = true;
+				updateTheFinalGames(theWinner);
+				championship.update();
+			} else if (counter == 7 && noProblem) {
+				winner.setContentText("The winner is: " + theWinner);
+				winner.show();
+			}
+		}
+		championship.update();
+		return true;
+
 	}
 
 	// NOTE : Check Winner functions (Tennis, Basketball, Soccer):
@@ -499,10 +494,8 @@ public class Controller {
 				throw new UserExceptions("The participant have to win by difference by 3");
 			} else {
 				if (theFirstParticipantWin > theSecondParticipantWin) {
-					theModel.addToWinnerList(startTennisGame.getParticipants().get(0).getText());
 					return startTennisGame.getParticipants().get(0).getText();
 				} else {
-					theModel.addToWinnerList(startTennisGame.getParticipants().get(1).getText());
 					return startTennisGame.getParticipants().get(1).getText();
 				}
 			}
@@ -542,7 +535,6 @@ public class Controller {
 		}
 
 		if (theFirstParticipantWin > theSecondParticipantWin) {
-			theModel.addToWinnerList(startBasketBallGame.getParticipants().get(0).getText());
 			return startBasketBallGame.getParticipants().get(0).getText();
 		} else if (theFirstParticipantWin == theSecondParticipantWin) {
 			noProblem = false;
@@ -550,7 +542,6 @@ public class Controller {
 			err.show();
 			return "Draw";
 		} else {
-			theModel.addToWinnerList(startBasketBallGame.getParticipants().get(1).getText());
 			return startBasketBallGame.getParticipants().get(1).getText();
 		}
 	}
@@ -577,10 +568,8 @@ public class Controller {
 					theSecondParticipantWin++;
 				}
 				if (theFirstParticipantWin > theSecondParticipantWin) {
-					theModel.addToWinnerList(startSoccerGame.getParticipants().get(0).getText());
 					return startSoccerGame.getParticipants().get(0).getText();
 				} else if (theFirstParticipantWin < theSecondParticipantWin) {
-					theModel.addToWinnerList(startSoccerGame.getParticipants().get(1).getText());
 					return startSoccerGame.getParticipants().get(1).getText();
 				} else {
 					// NOTE: Extra Time Match!
@@ -630,11 +619,9 @@ public class Controller {
 						}
 						if (num > num2) {
 							theFirstParticipantWin++;
-							theModel.addToWinnerList(startSoccerGame.getParticipants().get(0).getText());
 							return startSoccerGame.getParticipants().get(0).getText();
 						} else if (num < num2) {
 							theSecondParticipantWin++;
-							theModel.addToWinnerList(startSoccerGame.getParticipants().get(1).getText());
 							return startSoccerGame.getParticipants().get(1).getText();
 						} else {
 							// NOTE: Penalty Kicks !
@@ -679,7 +666,6 @@ public class Controller {
 			}
 		}
 		if (theFirstParticipantWin > theSecondParticipantWin) {
-			theModel.addToWinnerList(startSoccerGame.getParticipants().get(0).getText());
 			return startSoccerGame.getParticipants().get(0).getText();
 		} else if (theFirstParticipantWin == theSecondParticipantWin) {
 			noProblem = false;
@@ -687,7 +673,6 @@ public class Controller {
 			err.show();
 			return "Draw";
 		} else {
-			theModel.addToWinnerList(startSoccerGame.getParticipants().get(1).getText());
 			return startSoccerGame.getParticipants().get(1).getText();
 		}
 	}
