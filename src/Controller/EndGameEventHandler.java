@@ -32,7 +32,7 @@ public class EndGameEventHandler<T> implements EventHandler<ActionEvent> {
 			break;
 		case "BasketBall":
 			counter = 4;
-
+			break;
 		default:
 			counter = 5;
 			break;
@@ -44,19 +44,23 @@ public class EndGameEventHandler<T> implements EventHandler<ActionEvent> {
 
 		try {
 			String temp = gameModelUI.checkResults(controller);
-			if (!temp.equals("-1") || !temp.equals("Draw")) {
+			if (temp.equals("-1") || temp.equals("Draw")) {
+				this.controller.setNoProblem(false);
+				controller.handleCloseButtonActionGame();
+			}
+			else {
 				theModel.addToWinnerList(temp);
 				controller.updateTheWinner(temp);
 				controller.updateGames();
+				controller.handleCloseButtonActionGame();
 			}
 		} catch (UserExceptions ue) {
 			this.controller.setNoProblem(false);
+			
 			Controller.err.setContentText("you have to choose positive numbers");
 			Controller.err.show();
 			return;
 		}
-
-		controller.handleCloseButtonActionGame();
 	}
 
 }

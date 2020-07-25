@@ -351,7 +351,6 @@ public class Controller {
 	
 	// NOTE: Updates:
 	boolean updateTheWinner(String name) {
-		if (!name.equals("-1") || !name.equals("Draw")) {
 			for (int i = 0; i < theModel.getGamesList().size(); i++) {
 				if (championship.getAllButton().get(theModel.getGamesList().get(i).getGameNumber()).getId()
 						.equals("gameOn") && noProblem) {
@@ -359,7 +358,6 @@ public class Controller {
 					return true;
 				}
 			}
-		}
 		return false;
 	}
 
@@ -392,7 +390,7 @@ public class Controller {
 				updateTheFinalGames(theWinner);
 				championship.update();
 			} else if (counter == 7 && noProblem) {
-				winner.setContentText("The winner is: " + theWinner);
+				winner.setContentText("The winner is: " + theModel.getGamesList().get(6).getWinner());
 				winner.show();
 			}
 		}

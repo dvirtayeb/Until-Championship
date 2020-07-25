@@ -51,8 +51,7 @@ public class TennisModel extends SportGames implements GameModelUI{
 			for (int i = 0; i < getFirstParticipantsPoints().size(); i++) {
 					Integer firstParticipantPoint = getFirstParticipantsPoints().get(i);
 					Integer secondParticipantPoint = getSecondParticipantsPoints().get(i);
-					if (firstParticipantPoint < 0) {
-//						controller.setNoProblem(false);
+					if (firstParticipantPoint < 0 || secondParticipantPoint < 0) {
 						throw new UserExceptions("you have to choose positive numbers");
 					}
 					if (firstParticipantPoint > secondParticipantPoint)
