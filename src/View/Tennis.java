@@ -2,7 +2,7 @@ package View;
 
 import java.util.ArrayList;
 
-import Model.Model;
+import Model.Registry;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Tennis {
+public class Tennis implements GameViewUI {
 	private ArrayList<Text> participants;
 	private ArrayList<TextField> pointsListFirstParticipants;
 	private ArrayList<TextField> pointsListSecondParticipants;
@@ -30,7 +30,7 @@ public class Tennis {
 	private VBox vb;
 	private BorderPane bp;
 
-	public Tennis(Stage thirdStage, Model theModel, Championship champ) {
+	public Tennis(Stage thirdStage, Registry theModel, Championship champ) {
 		err = new Alert(AlertType.ERROR, "", ButtonType.OK);
 		participants = new ArrayList<Text>();
 		pointsListFirstParticipants = new ArrayList<TextField>();
