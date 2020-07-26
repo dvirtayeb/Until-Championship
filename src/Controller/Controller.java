@@ -11,7 +11,7 @@ import View.Championship;
 import View.GameViewUI;
 import View.Soccer;
 import View.Tennis;
-import View.View;
+import View.MainView;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -38,27 +38,28 @@ public class Controller {
 	private boolean finishSemiFinalsGames = false;
 	private boolean noProblem = true;
 
-	private View theView;
+	private MainView theView;
 	private Championship championship;
-
-	private String theWinner;
 	private String kindGame;
 	private ArrayList<EventHandler<ActionEvent>> eventStartGame;
 
 	GameViewUI game;
 
-	public Controller(Registry theReg, View theView) throws UserExceptions {
+	public Controller(Registry theReg, MainView theView) throws UserExceptions {
 		this.theReg = theReg;
 		this.theView = theView;
+
 		kindGame = theView.getKindRB(); // Default
+		eventStartGame = new ArrayList<>();
+
 		err = new Alert(AlertType.ERROR, "", ButtonType.OK);
 		begin = new Alert(AlertType.INFORMATION, "", ButtonType.OK);
 		begin.setTitle("Instructions");
 		begin.setHeaderText("Lets Start, Press double click on 'Sport - Games' for to start"
 				+ "\n# Tip: You can decide who will competition in the next stage,\nby choosing which team will play first");
 		change = new Alert(AlertType.INFORMATION, "The game changed", ButtonType.OK);
-		winner = new Alert(AlertType.INFORMATION, "The winner is: ", ButtonType.OK);
-		eventStartGame = new ArrayList<>();
+		winner = new Alert(AlertType.INFORMATION, "", ButtonType.OK);
+
 		// Change Game : Tennis,Basketball,Soccer
 		ChangeListener<Toggle> chl = new ChangeListener<Toggle>() {
 
@@ -81,17 +82,37 @@ public class Controller {
 					if (theReg.getParticipantsList().size() < 8)
 						addParticipant();
 					else {
-						throw new UserExceptions("");
+						throw new UserExceptions("You try to insert more then 8 participant");
 					}
 				} catch (UserExceptions Ue) {
-					err.setContentText("you try to insert more then 8 participant");
+					err.setContentText("You try to insert more then 8 participant");
+					err.show();
+				}
+
+			}
+		};
+		theView.addEventToSubmit(eventAddParticipant, theView.getBtnAddParticipantName());
+
+		// DELETE Participants list
+		EventHandler<ActionEvent> eventDeleteParticipantList = new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				try {
+					if (theReg.getParticipantsList().size() > 0)
+						deleteParticipantList();
+					else {
+						throw new UserExceptions("The List is empty");
+					}
+				} catch (UserExceptions Ue) {
+					err.setContentText("The List is empty");
 					err.show();
 				}
 
 			}
 
 		};
-		theView.addEventToSubmit(eventAddParticipant, theView.getBtnAddParticipantName());
+		theView.addEventToSubmit(eventDeleteParticipantList, theView.getBtnClearParticipants());
 
 		// Start Championship
 		EventHandler<ActionEvent> startChampionship = new EventHandler<ActionEvent>() {
@@ -103,10 +124,10 @@ public class Controller {
 						startChampionship();
 						begin.show();
 					} else {
-						throw new UserExceptions("");
+						throw new UserExceptions("You didn't insert 8 participants");
 					}
 				} catch (UserExceptions Ue) {
-					err.setContentText("you didn't insert 8 participants");
+					err.setContentText("You didn't insert 8 participants");
 					err.show();
 				}
 
@@ -130,6 +151,12 @@ public class Controller {
 		return true;
 	}
 
+	private boolean deleteParticipantList() {
+		theReg.deleteParticipantList();
+		theView.deleteParticipantList();
+		return true;
+	}
+
 	private boolean startChampionship() throws UserExceptions {
 		theReg.clearWinnerList();
 		theReg.clearGameList();
@@ -142,9 +169,12 @@ public class Controller {
 			theReg.addToWinnerList(" ");
 		}
 
-		// Page Championship :
+		// Championship Page :
 		championship = new Championship(new Stage(), theReg);
 		championship.addChampionship();
+		for (int i = 0; i < championship.getGamesList().size(); i++) {
+			theReg.addGameToList(championship.getGamesList().get(i));
+		}
 		for (int i = 0; i < championship.getAllButton().size(); i++) {
 			int counter = i;
 
@@ -163,8 +193,8 @@ public class Controller {
 						} else if (!finishQuarterGames && 3 < counter && counter < 6) {
 							err.setContentText("you have to finish the QuarterGames");
 							err.show();
-						} else if (!finishSemiFinalsGames && !finishQuarterGames && counter > 5
-								|| !finishSemiFinalsGames && finishQuarterGames && counter > 5) {
+						} else if ((!finishSemiFinalsGames && !finishQuarterGames && counter > 5)
+								|| (!finishSemiFinalsGames && finishQuarterGames && counter > 5)) {
 							err.setContentText("you have to finish the Semi-Finals");
 							err.show();
 						}
@@ -177,8 +207,8 @@ public class Controller {
 		return true;
 	}
 
+	// Tennis,Basketball,Soccer Windows:
 	private boolean startGame(String kindGame) {
-		// Page Tennis
 
 		EventHandler<ActionEvent> doneGameEvent;
 
@@ -186,21 +216,15 @@ public class Controller {
 		default:
 		case "Tennis":
 			game = new Tennis(new Stage(), theReg, championship);
-			tennisModel.setParticipants(game.getParticipants().get(0).getText(),
-					game.getParticipants().get(1).getText());
 			doneGameEvent = new EndGameEventHandler<ActionEvent>(tennisModel, game, this, theReg);
 			break;
 
 		case "BasketBall":
 			game = new Basketball(new Stage(), theReg, championship);
-			basketBallModel.setParticipants(game.getParticipants().get(0).getText(),
-					game.getParticipants().get(1).getText());
 			doneGameEvent = new EndGameEventHandler<ActionEvent>(basketBallModel, game, this, theReg);
 			break;
 		case "Soccer":
 			game = new Soccer(new Stage(), theReg, championship);
-			soccerModel.setParticipants(game.getParticipants().get(0).getText(),
-					game.getParticipants().get(1).getText());
 			doneGameEvent = new EndGameEventHandler<ActionEvent>(soccerModel, game, this, theReg);
 			break;
 		}
@@ -241,7 +265,7 @@ public class Controller {
 		return true;
 	}
 
-	boolean updateGames() {
+	boolean updateGames(String theWinner) {
 		int counter = 0;
 		championship.update();
 		for (int i = 0; i < theReg.getWinnerList().size(); i++) {
@@ -256,7 +280,8 @@ public class Controller {
 				updateTheFinalGames(theWinner);
 				championship.update();
 			} else if (counter == 7 && noProblem) {
-				winner.setContentText("The winner is: " + theReg.getGamesList().get(6).getWinner());
+				winner.setTitle("The Winner");
+				winner.setHeaderText("The Winner is:  " + theReg.getGamesList().get(6).getWinnerName());
 				winner.show();
 			}
 		}
@@ -268,7 +293,4 @@ public class Controller {
 		this.noProblem = noProblem;
 	}
 
-	protected void setWinner(String name) {
-		theWinner = name;
-	}
 }

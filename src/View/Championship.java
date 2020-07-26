@@ -23,13 +23,15 @@ public class Championship {
 	private TreeItem<SportGames> groupGames;
 	private TreeItem<SportGames> quarterFinalsGames;
 	private TreeItem<SportGames> finalGames;
-	private SportGames game;
+	private ArrayList<SportGames> gamesList;
 	private TreeItem<SportGames> gameItem;
 	private TreeItem<SportGames> gameItem2;
 	private TreeItem<SportGames> gameItem3;
 
 	public Championship(Stage seconderyStage, Registry theModel) {
 		allButton = new ArrayList<Button>();
+		gamesList = new ArrayList<SportGames>();
+
 		treeTableView = new TreeTableView<SportGames>();
 		TreeTableColumn<SportGames, String> treeTableColumn1 = new TreeTableColumn<>("    Games						");
 		TreeTableColumn<SportGames, String> treeTableColumn2 = new TreeTableColumn<>(
@@ -41,8 +43,8 @@ public class Championship {
 		treeTableView.getColumns().add(treeTableColumn1);
 		treeTableView.getColumns().add(treeTableColumn2);
 		treeTableView.getColumns().add(treeTableColumn3);
-		games = new TreeItem<SportGames>(new SportGames("Sport Games", "Sport - Games"));
 
+		games = new TreeItem<SportGames>(new SportGames("Sport Games", "Sport - Games"));
 		groupGames = new TreeItem<SportGames>(new SportGames("Sport Games", "Quarter-finals-Games"));
 		games.getChildren().add(groupGames);
 		for (int i = 0; i < theModel.getParticipantsList().size() - 1; i++) {
@@ -50,44 +52,41 @@ public class Championship {
 			allButton.get(i).setId("game" + (i + 1));
 		}
 		int counter = 0;
+		// Games: 1-4
 		for (int i = 0; i < theModel.getParticipantsList().size() - 1; i = i + 2) {
-			game = new SportGames("Sport Games",
+			gamesList.add(new SportGames("Sport Games",
 					theModel.getParticipantsList().get(i) + " VS " + theModel.getParticipantsList().get(i + 1), "",
-					allButton.get(i / 2), counter);
-			gameItem = new TreeItem<SportGames>(game);
+					allButton.get(i / 2), counter));
+			gameItem = new TreeItem<SportGames>(gamesList.get(i / 2));
 			groupGames.getChildren().add(gameItem);
-			theModel.addGameToList(game); // or make array list of games and from the controller move to the model?
 			counter++;
 		}
+		// Games: 5-6
 		quarterFinalsGames = new TreeItem<SportGames>(new SportGames("Sport Games", "Semi-finals- Games"));
 		games.getChildren().add(quarterFinalsGames);
 		for (int i = 0; i < theModel.getWinnerList().size() - 6; i++) {
-			game = new SportGames("Sport Games",
+			gamesList.add(new SportGames("Sport Games",
 					theModel.getWinnerList().get(i) + " VS " + theModel.getWinnerList().get(i + 1), "",
-					allButton.get((i + 4)), counter);
-			gameItem2 = new TreeItem<SportGames>(game);
+					allButton.get((i + 4)), counter));
+			gameItem2 = new TreeItem<SportGames>(gamesList.get(i + 4));
 			quarterFinalsGames.getChildren().add(gameItem2);
-			theModel.addGameToList(game);// or make array list of games and from the controller move to the model?
 			counter++;
 		}
+		// Games: 7
 		finalGames = new TreeItem<SportGames>(new SportGames("Sport Games", "Final-Stage-Game"));
 		games.getChildren().add(finalGames);
-		for (int i = 0; i < 1; i++) {
-			game = new SportGames("Sport Games",
-					theModel.getWinnerList().get(i) + " VS " + theModel.getWinnerList().get(i + 1), "",
-					allButton.get((6)), counter);
-			gameItem3 = new TreeItem<SportGames>(game);
-			finalGames.getChildren().add(gameItem3);
-			theModel.addGameToList(game);// or make array list of games and from the controller move to the model?
-			counter++;
-		}
-
+		gamesList.add(new SportGames("Sport Games",
+				theModel.getWinnerList().get(0) + " VS " + theModel.getWinnerList().get(1), "",
+				allButton.get((6)), counter));
+		gameItem3 = new TreeItem<SportGames>(gamesList.get(6));
+		finalGames.getChildren().add(gameItem3);
+		
 		treeTableView.setRoot(games);
 		vb = new VBox();
 		vb.getChildren().addAll(treeTableView);
 
 		// New Scene
-		Scene scene = new Scene(vb, 800, 400);
+		Scene scene = new Scene(vb, 505, 400);
 		seconderyStage.setTitle("Championship");
 		seconderyStage.setScene(scene);
 		seconderyStage.show();
@@ -110,12 +109,7 @@ public class Championship {
 		return allButton;
 	}
 
-	public SportGames getGame() {
-		return game;
+	public ArrayList<SportGames> getGamesList() {
+		return gamesList;
 	}
-
-	public void setGame(SportGames game) {
-		this.game = game;
-	}
-
 }

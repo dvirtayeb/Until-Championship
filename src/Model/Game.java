@@ -6,13 +6,4 @@ public abstract class Game {
 	public Game(String name) {
 		this.typeGame = name;
 	}
-
-	public String getGame() {
-		return typeGame;
-	}
-
-	public void setGame(String name) {
-		this.typeGame = name;
-	}
-
 }

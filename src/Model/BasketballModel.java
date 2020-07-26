@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import Controller.Controller;
 
 public class BasketballModel extends SportGames implements GameModelUI {
-	// The index in the arrayList meant the round;
-
 	private ArrayList<Integer> firstParticipantsPoints;
 	private ArrayList<Integer> secondParticipantsPoints;
 
@@ -56,10 +54,10 @@ public class BasketballModel extends SportGames implements GameModelUI {
 				throw new UserExceptions("you have to choose positive numbers");
 			}
 			if (firstParticipantPoint > secondParticipantPoint) {
-				theFirstParticipantWin++;
+				theFirstParticipantWin =+ firstParticipantPoint;
 			} else if (firstParticipantPoint == secondParticipantPoint) {
 			} else
-				theSecondParticipantWin++;
+				theSecondParticipantWin =+ secondParticipantPoint;
 		}
 
 		if (theFirstParticipantWin > theSecondParticipantWin) {
@@ -73,4 +71,8 @@ public class BasketballModel extends SportGames implements GameModelUI {
 		}
 	}
 
+	public void setParticipants(String participant1, String participant2) {
+		this.participant1 = participant1;
+		this.participant2 = participant2;
+	}
 }

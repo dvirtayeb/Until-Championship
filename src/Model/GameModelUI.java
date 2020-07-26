@@ -15,6 +15,8 @@ public interface GameModelUI {
 	public ArrayList<Integer> getFirstParticipantsPoints();
 
 	public ArrayList<Integer> getSecondParticipantsPoints();
+	
+	void setParticipants(String participant1, String participant2);
 
 	String checkResults(Controller controller) throws UserExceptions;
 

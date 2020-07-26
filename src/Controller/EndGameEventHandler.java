@@ -14,9 +14,10 @@ public class EndGameEventHandler<T> implements EventHandler<ActionEvent> {
 	Controller controller;
 	Registry theModel;
 
-	public EndGameEventHandler(GameModelUI gameModel, GameViewUI gameView, Controller controller, Registry theModel) {
-		this.gameModelUI = gameModel;
-		this.gameViewUI = gameView;
+	public EndGameEventHandler(GameModelUI gameModelUI, GameViewUI gameViewUI, Controller controller,
+			Registry theModel) {
+		this.gameModelUI = gameModelUI;
+		this.gameViewUI = gameViewUI;
 		this.controller = controller;
 		this.theModel = theModel;
 	}
@@ -25,6 +26,8 @@ public class EndGameEventHandler<T> implements EventHandler<ActionEvent> {
 	public void handle(ActionEvent event) {
 		this.gameModelUI.clearParticipantPoints();
 		this.controller.setNoProblem(true);
+		gameModelUI.setParticipants(gameViewUI.getParticipants().get(0).getText(),
+				gameViewUI.getParticipants().get(1).getText());
 		int number;
 		switch (theModel.getKindGame()) {
 		case "Soccer":
@@ -50,7 +53,7 @@ public class EndGameEventHandler<T> implements EventHandler<ActionEvent> {
 			} else {
 				theModel.addToWinnerList(temp);
 				controller.updateTheWinner(temp);
-				controller.updateGames();
+				controller.updateGames(temp);
 				controller.handleCloseButtonActionGame();
 			}
 		} catch (UserExceptions ue) {

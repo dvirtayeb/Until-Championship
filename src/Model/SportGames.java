@@ -7,12 +7,7 @@ public class SportGames extends Game {
 	protected String nameOfSportGame;
 	protected String winner;
 	protected Button startGame;
-	protected boolean hasTennis;
-	protected boolean hasBasketball;
-	protected boolean hasSoccer;
 	protected int gameNumber;
-	private boolean oneGamePlayed = false;
-
 	protected String participant1, participant2;
 
 	public SportGames(String typeGame, String kindSportGame) {
@@ -26,27 +21,6 @@ public class SportGames extends Game {
 		this.winner = winner;
 		this.startGame = bStartGame;
 		gameNumber = gameCounter;
-		oneGamePlayed = false;
-	}
-
-	public void setGame(String name) {
-		switch (name) {
-		case "Tennis":
-			hasTennis = true;
-			hasBasketball = false;
-			hasSoccer = false;
-			break;
-		case "Basketball":
-			hasBasketball = true;
-			hasSoccer = false;
-			hasTennis = false;
-			break;
-		case "Soccer":
-			hasSoccer = true;
-			hasTennis = false;
-			hasBasketball = false;
-			break;
-		}
 	}
 
 	public String getName() {
@@ -66,7 +40,10 @@ public class SportGames extends Game {
 			return "Win: " + winner;
 		}
 		return "";
+	}
 
+	public String getWinnerName() {
+		return winner;
 	}
 
 	public void setWinner(String winner) {
@@ -79,19 +56,6 @@ public class SportGames extends Game {
 
 	public void setStartGame(Button startGame) {
 		this.startGame = startGame;
-	}
-
-	public boolean isOneGamePlayed() {
-		return oneGamePlayed;
-	}
-
-	public void setOneGamePlayed(boolean oneGamePlayed) {
-		this.oneGamePlayed = oneGamePlayed;
-	}
-
-	public void setParticipants(String participant1, String participant2) {
-		this.participant1 = participant1;
-		this.participant2 = participant2;
 	}
 
 	public String toString() {

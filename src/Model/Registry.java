@@ -17,10 +17,6 @@ public class Registry {
 		winnerList = new ArrayList<>();
 	}
 
-	public void setGame(String name) {
-		theGame.setGame(name);
-	}
-
 	public void updateGame(String kindGame) {
 		switch (kindGame) {
 		case "BasketBall":
@@ -41,6 +37,10 @@ public class Registry {
 
 	public void addParticipantToList(String value) {
 		participantsList.add(value);
+	}
+
+	public void deleteParticipantList() {
+		participantsList.clear();
 	}
 
 	public ArrayList<String> getParticipantsList() {

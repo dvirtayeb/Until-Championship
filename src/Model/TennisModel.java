@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import Controller.Controller;
 
 public class TennisModel extends SportGames implements GameModelUI {
-
-	public ArrayList<Integer> firstParticipantsPoints;
-	public ArrayList<Integer> secondParticipantsPoints;
+	private ArrayList<Integer> firstParticipantsPoints;
+	private ArrayList<Integer> secondParticipantsPoints;
 
 	public TennisModel(String typeGame, String name) {
 		super(typeGame, name);
@@ -48,9 +47,9 @@ public class TennisModel extends SportGames implements GameModelUI {
 
 		int theFirstParticipantWin = 0;
 		int theSecondParticipantWin = 0;
-		for (int i = 0; i < getFirstParticipantsPoints().size(); i++) {
-			Integer firstParticipantPoint = getFirstParticipantsPoints().get(i);
-			Integer secondParticipantPoint = getSecondParticipantsPoints().get(i);
+		for (int i = 0; i < firstParticipantsPoints.size(); i++) {
+			Integer firstParticipantPoint = firstParticipantsPoints.get(i);
+			Integer secondParticipantPoint = secondParticipantsPoints.get(i);
 			if (firstParticipantPoint < 0 || secondParticipantPoint < 0) {
 				throw new UserExceptions("you have to choose positive numbers");
 			}
@@ -58,12 +57,15 @@ public class TennisModel extends SportGames implements GameModelUI {
 				theFirstParticipantWin++;
 			else if (firstParticipantPoint == secondParticipantPoint) {
 
-			} else
+			} else if (secondParticipantPoint > firstParticipantPoint)
 				theSecondParticipantWin++;
+
 		}
-		if (theFirstParticipantWin >= 3 + theSecondParticipantWin)
+		if ((theFirstParticipantWin >= 3 + theSecondParticipantWin) ||
+				(theFirstParticipantWin ==3 && theSecondParticipantWin==2))
 			return participant1;
-		else if (theFirstParticipantWin + 3 <= theSecondParticipantWin)
+		else if ((theFirstParticipantWin + 3 <= theSecondParticipantWin) ||
+				(theFirstParticipantWin==2 && theSecondParticipantWin==3))
 			return participant2;
 		else if (theFirstParticipantWin == theSecondParticipantWin) {
 			controller.setNoProblem(false);
@@ -78,4 +80,8 @@ public class TennisModel extends SportGames implements GameModelUI {
 		}
 	}
 
+	public void setParticipants(String participant1, String participant2) {
+		this.participant1 = participant1;
+		this.participant2 = participant2;
+	}
 }
