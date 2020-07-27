@@ -49,13 +49,9 @@ public class SportGames extends Game {
 	public void setWinner(String winner) {
 		this.winner = winner;
 	}
-
+	// Use for the treeTableView-javaFx:
 	public Button getStartGame() {
 		return startGame;
-	}
-
-	public void setStartGame(Button startGame) {
-		this.startGame = startGame;
 	}
 
 	public String toString() {

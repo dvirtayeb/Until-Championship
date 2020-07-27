@@ -13,7 +13,6 @@ public class Registry {
 		theGame = new SportGames("Sport - Games", "Sport - Games");
 		participantsList = new ArrayList<>();
 		gamesList = new ArrayList<>();
-
 		winnerList = new ArrayList<>();
 	}
 
@@ -66,10 +65,6 @@ public class Registry {
 
 	public void addToWinnerList(String name) {
 		winnerList.add(name);
-	}
-
-	public void setWinnerList(ArrayList<String> winnerList) {
-		this.winnerList = winnerList;
 	}
 
 	public void clearWinnerList() {

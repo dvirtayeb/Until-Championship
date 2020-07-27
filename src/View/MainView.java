@@ -1,5 +1,6 @@
 package View;
 
+
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -27,17 +29,17 @@ public class MainView {
 	private Text name;
 	private TextField tfParticipantName;
 
-	private Button btnAddParticipantName,btnStartChampionship,btnClearParticipants;
+	private Button btnAddParticipantName, btnStartChampionship, btnClearParticipants;
 
 	private ListView<String> listViewParticipants;
-	
 
 	public MainView(Stage primaryStage) {
-
+		String background = "-fx-background-color: #FFFFFF";
+		// Location: Top
 		Text championshipText = new Text("Championship ");
-		championshipText.setFill(Color.PURPLE);
+		championshipText.setFill(Color.ROYALBLUE);
 		championshipText.setFont(new Font(34));
-		// location: LEFT
+		// Location: LEFT
 		listViewParticipants = new ListView<>();
 		listViewParticipants.setMaxSize(150, 300);
 		Text participants = new Text("PARTICIPANTS: ");
@@ -46,14 +48,15 @@ public class MainView {
 		btnClearParticipants = new Button("Delete List");
 		HBox hbClear = new HBox(btnClearParticipants);
 
-		// location: Center
+		// Location: Center
 		Text choose = new Text("Choose 8 participants for the competition");
 		choose.setFont(new Font(16));
-		Text info = new Text("(it's suppose to be a name of a team or a player,\n			Choose Wisely!)");
+		Text info = new Text("(it's suppose to be a name of a team or a player,\n			Choose Wisely!)\n");
 		info.setFont(new Font(13));
 		name = new Text("Participant Name: ");
-		name.setFill(Color.RED);
-		name.setFont(new Font(18));
+//		name.setFill(Color.RED);
+		name.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
+		//name.setFont(new Font(18));
 		tfParticipantName = new TextField();
 		btnAddParticipantName = new Button("Add Participant Name");
 		btnStartChampionship = new Button("Start Championship");
@@ -71,8 +74,8 @@ public class MainView {
 		HBox hbSubmit = new HBox(btnAddParticipantName, btnStartChampionship);
 		hbSubmit.setAlignment(Pos.CENTER);
 
-		// location: RIGHT
-		Text changeGame = new Text("choose the Game:   ");
+		// Location: RIGHT
+		Text changeGame = new Text("Choose the Game:   ");
 		changeGame.setFont(new Font(14));
 		changeGame.setFill(Color.RED);
 		HBox hbChangeGame = new HBox();
@@ -85,7 +88,6 @@ public class MainView {
 		rbBasketBall.setToggleGroup(tg);
 		rbSoccer = new RadioButton("Soccer");
 		rbSoccer.setToggleGroup(tg);
-
 		HBox hb1 = new HBox(rbTenis);
 		hb1.setAlignment(Pos.CENTER_LEFT);
 		HBox hb2 = new HBox(rbBasketBall);
@@ -99,7 +101,7 @@ public class MainView {
 		vbTitle.setAlignment(Pos.TOP_CENTER);
 
 		VBox vbLeft = new VBox();
-		vbLeft.getChildren().addAll(participants, hbListParticipants,hbClear);
+		vbLeft.getChildren().addAll(participants, hbListParticipants, hbClear);
 		vbLeft.setAlignment(Pos.CENTER_LEFT);
 
 		VBox vbCenter = new VBox();
@@ -112,6 +114,7 @@ public class MainView {
 
 		// border pane
 		bp = new BorderPane();
+		bp.setStyle(background);
 		bp.setTop(vbTitle);
 		bp.setLeft(vbLeft);
 		bp.setCenter(vbCenter);
@@ -144,7 +147,7 @@ public class MainView {
 		else
 			return rbSoccer.getText();
 	}
-	
+
 	public void deleteParticipantList() {
 		listViewParticipants.getItems().clear();
 	}

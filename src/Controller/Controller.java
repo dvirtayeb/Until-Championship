@@ -255,13 +255,19 @@ public class Controller {
 	}
 
 	private boolean updateTheQuarterFinalsGames(String name) {
-		theReg.getGamesList().get(4).setName(theReg.getWinnerList().get(8) + " VS " + theReg.getWinnerList().get(9));
-		theReg.getGamesList().get(5).setName(theReg.getWinnerList().get(10) + " VS " + theReg.getWinnerList().get(11));
+		String winnerGame1 = theReg.getGamesList().get(0).getWinnerName();
+		String winnerGame2 = theReg.getGamesList().get(1).getWinnerName();
+		String winnerGame3 = theReg.getGamesList().get(2).getWinnerName();
+		String winnerGame4 = theReg.getGamesList().get(3).getWinnerName();
+		theReg.getGamesList().get(4).setName(winnerGame1+" VS "+ winnerGame2);
+		theReg.getGamesList().get(5).setName(winnerGame3+" VS "+ winnerGame4);
 		return true;
 	}
 
 	private boolean updateTheFinalGames(String name) {
-		theReg.getGamesList().get(6).setName(theReg.getWinnerList().get(12) + " VS " + theReg.getWinnerList().get(13));
+		String winnerGame5 = theReg.getGamesList().get(4).getWinnerName();
+		String winnerGame6 = theReg.getGamesList().get(5).getWinnerName();
+		theReg.getGamesList().get(6).setName(winnerGame5+" VS "+ winnerGame6);
 		return true;
 	}
 

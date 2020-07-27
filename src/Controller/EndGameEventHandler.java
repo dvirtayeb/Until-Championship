@@ -28,32 +28,32 @@ public class EndGameEventHandler<T> implements EventHandler<ActionEvent> {
 		this.controller.setNoProblem(true);
 		gameModelUI.setParticipants(gameViewUI.getParticipants().get(0).getText(),
 				gameViewUI.getParticipants().get(1).getText());
-		int number;
+		int numLoop;
 		switch (theModel.getKindGame()) {
 		case "Soccer":
-			number = 2;
+			numLoop = 2;
 			break;
 		case "BasketBall":
-			number = 4;
+			numLoop = 4;
 			break;
 		default:
-			number = 5;
+			numLoop = 5;
 			break;
 		}
-		for (int i = 0; i < number; i++) {
+		for (int i = 0; i < numLoop; i++) {
 			gameModelUI.addPointsToFirstparticipantList(gameViewUI.getPointFromTeam1(i));
 			gameModelUI.addPointsToSecondparticipantList(gameViewUI.getPointFromTeam2(i));
 		}
 
 		try {
-			String temp = gameModelUI.checkResults(controller);
-			if (temp.equals("-1") || temp.equals("Draw")) {
+			String theWinner = gameModelUI.checkResults(controller);
+			if (theWinner.equals("-1") || theWinner.equals("Draw")) {
 				this.controller.setNoProblem(false);
 				controller.handleCloseButtonActionGame();
 			} else {
-				theModel.addToWinnerList(temp);
-				controller.updateTheWinner(temp);
-				controller.updateGames(temp);
+				theModel.addToWinnerList(theWinner);
+				controller.updateTheWinner(theWinner);
+				controller.updateGames(theWinner);
 				controller.handleCloseButtonActionGame();
 			}
 		} catch (UserExceptions ue) {

@@ -65,9 +65,11 @@ public class SoccerModel extends SportGames implements GameModelUI {
 			}
 		}
 		if (theFirstParticipantWin > theSecondParticipantWin) {
-			return participant1;
+			winner = participant1;
+			return winner;
 		} else if (theFirstParticipantWin < theSecondParticipantWin) {
-			return participant2;
+			winner = participant2;
+			return winner;
 		} else {
 			// NOTE: Extra Time Match!
 			TextInputDialog dialog = new TextInputDialog("0");
@@ -107,10 +109,12 @@ public class SoccerModel extends SportGames implements GameModelUI {
 				}
 				if (num > num2) {
 					theFirstParticipantWin = +num;
-					return participant1;
+					winner = participant1;
+					return winner;
 				} else if (num < num2) {
 					theSecondParticipantWin = +num2;
-					return participant2;
+					winner = participant2;
+					return winner;
 				} else {
 					// NOTE: Penalty Kicks !
 					int penaltyTeam1Score = 0;
@@ -148,9 +152,11 @@ public class SoccerModel extends SportGames implements GameModelUI {
 			}
 		}
 		if (theFirstParticipantWin > theSecondParticipantWin) {
-			return participant1;
+			winner = participant1;
+			return winner;
 		} else {
-			return participant2;
+			winner = participant2;
+			return winner;
 		}
 	}
 

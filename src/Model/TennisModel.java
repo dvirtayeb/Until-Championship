@@ -62,12 +62,14 @@ public class TennisModel extends SportGames implements GameModelUI {
 
 		}
 		if ((theFirstParticipantWin >= 3 + theSecondParticipantWin) ||
-				(theFirstParticipantWin ==3 && theSecondParticipantWin==2))
-			return participant1;
-		else if ((theFirstParticipantWin + 3 <= theSecondParticipantWin) ||
-				(theFirstParticipantWin==2 && theSecondParticipantWin==3))
-			return participant2;
-		else if (theFirstParticipantWin == theSecondParticipantWin) {
+				(theFirstParticipantWin ==3 && theSecondParticipantWin==2)) {
+			winner = participant1;
+			return winner;
+		}else if ((theFirstParticipantWin + 3 <= theSecondParticipantWin) ||
+				(theFirstParticipantWin==2 && theSecondParticipantWin==3)) {
+			winner = participant2;
+			return winner;
+		}else if (theFirstParticipantWin == theSecondParticipantWin) {
 			controller.setNoProblem(false);
 			Controller.err.setContentText("One of the Team has to Win");
 			Controller.err.show();

@@ -64,10 +64,8 @@ public class Championship {
 		// Games: 5-6
 		quarterFinalsGames = new TreeItem<SportGames>(new SportGames("Sport Games", "Semi-finals- Games"));
 		games.getChildren().add(quarterFinalsGames);
-		for (int i = 0; i < theModel.getWinnerList().size() - 6; i++) {
-			gamesList.add(new SportGames("Sport Games",
-					theModel.getWinnerList().get(i) + " VS " + theModel.getWinnerList().get(i + 1), "",
-					allButton.get((i + 4)), counter));
+		for (int i = 0; i < 2; i++) {
+			gamesList.add(new SportGames("Sport Games"," VS ", "",allButton.get((i + 4)), counter));
 			gameItem2 = new TreeItem<SportGames>(gamesList.get(i + 4));
 			quarterFinalsGames.getChildren().add(gameItem2);
 			counter++;
@@ -75,9 +73,7 @@ public class Championship {
 		// Games: 7
 		finalGames = new TreeItem<SportGames>(new SportGames("Sport Games", "Final-Stage-Game"));
 		games.getChildren().add(finalGames);
-		gamesList.add(new SportGames("Sport Games",
-				theModel.getWinnerList().get(0) + " VS " + theModel.getWinnerList().get(1), "",
-				allButton.get((6)), counter));
+		gamesList.add(new SportGames("Sport Games"," VS ", "",allButton.get((6)), counter));
 		gameItem3 = new TreeItem<SportGames>(gamesList.get(6));
 		finalGames.getChildren().add(gameItem3);
 		

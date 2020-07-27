@@ -61,13 +61,15 @@ public class BasketballModel extends SportGames implements GameModelUI {
 		}
 
 		if (theFirstParticipantWin > theSecondParticipantWin) {
-			return participant1;
+			winner = participant1;
+			return winner;
 		} else if (theFirstParticipantWin == theSecondParticipantWin) {
 			Controller.err.setContentText("One of the Team has to Win");
 			Controller.err.show();
 			return "Draw";
 		} else {
-			return participant2;
+			winner = participant2;
+			return winner;
 		}
 	}
 

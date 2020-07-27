@@ -144,19 +144,18 @@ public class Soccer implements GameViewUI {
 			participants.get(0).setFont(new Font(16));
 			participants.get(1).setFont(new Font(16));
 		} else if (champ.getAllButton().get(4).isArmed()) {
-			participants.add(new Text(theReg.getWinnerList().get(8)));
-			participants.add(new Text(theReg.getWinnerList().get(9)));
+			participants.add(new Text(theReg.getGamesList().get(0).getWinnerName()));
+			participants.add(new Text(theReg.getGamesList().get(1).getWinnerName()));
 			participants.get(0).setFont(new Font(16));
 			participants.get(1).setFont(new Font(16));
-		
 		} else if (champ.getAllButton().get(5).isArmed()) {
-			participants.add(new Text(theReg.getWinnerList().get(10)));
-			participants.add(new Text(theReg.getWinnerList().get(11)));
+			participants.add(new Text(theReg.getGamesList().get(2).getWinnerName()));
+			participants.add(new Text(theReg.getGamesList().get(3).getWinnerName()));
 			participants.get(0).setFont(new Font(16));
 			participants.get(1).setFont(new Font(16));
 		} else {
-			participants.add(new Text(theReg.getWinnerList().get(12)));
-			participants.add(new Text(theReg.getWinnerList().get(13)));
+			participants.add(new Text(theReg.getGamesList().get(4).getWinnerName()));
+			participants.add(new Text(theReg.getGamesList().get(5).getWinnerName()));
 			participants.get(0).setFont(new Font(16));
 			participants.get(1).setFont(new Font(16));
 		}
