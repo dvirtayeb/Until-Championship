@@ -17,6 +17,8 @@ Kind of game that you can play:
 Software operation:
 * Insert 8 participants( could be names of people or names of teams)
 * Press to "start Championship"
+
+![1.2](https://github.com/dvirtayeb/Until-Championship/blob/master/1.2.png)
 * Insert the points of each comptition in the stage "Groups",for to insert points,press "Start-Game".
 * When you finish to insert you get the winners in the stage of the groups, and you can keep to stage of "QuarterGames"
 * Insert the points of each comptition in the stage "QuarterGames", you will get the winner in the stage.
