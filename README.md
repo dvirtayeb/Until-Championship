@@ -22,6 +22,10 @@ Software operation:
 * Insert the points of each comptition in the stage "Groups",for to insert points,press "Start-Game".
 * When you finish to insert you get the winners in the stage of the groups, and you can keep to stage of "QuarterGames"
 * Insert the points of each comptition in the stage "QuarterGames", you will get the winner in the stage.
+
+![2](https://github.com/dvirtayeb/Until-Championship/blob/master/2.png)
+![3](https://github.com/dvirtayeb/Until-Championship/blob/master/3.png)
 * Now you get the final game, insert the points of the game and you will get the name of the winner.
 
+![4](https://github.com/dvirtayeb/Until-Championship/blob/master/4.png)
   The comptition is over.
