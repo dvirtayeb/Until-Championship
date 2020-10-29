@@ -1,6 +1,11 @@
 # Until-Championship
 The program management competition until championship,
 by get the points of the teams and return the winner.
+Use of tools:
+* Programming language: "Java"
+* Programming paradigm: "Object-oriented programming"(OOP)
+* Software design: "MVC"
+* Software platform: "Javafx"
 
 Kind of game that you can play:
 
@@ -8,12 +13,6 @@ Kind of game that you can play:
 * Tennis
 * Basketball
 * Soccer
-
-Use of tools:
-* Programming language: "Java"
-* Programming paradigm: "Object-oriented programming"(OOP)
-* Software design: "MVC"
-* Software platform: "Javafx"
 
 Software operation:
 * Insert 8 participants( could be names of people or names of teams)
