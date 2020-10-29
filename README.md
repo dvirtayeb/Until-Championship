@@ -1,9 +1,9 @@
 # Until-Championship
 The program management competition until championship,
-
 by get the points of the teams and return the winner.
 
 Kind of game that you can play:
+
 ![1.1](https://github.com/dvirtayeb/Until-Championship/blob/master/1.1.png)
 * Tennis
 * Basketball
