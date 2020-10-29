@@ -28,4 +28,5 @@ Software operation:
 * Now you get the final game, insert the points of the game and you will get the name of the winner.
 
 ![4](https://github.com/dvirtayeb/Until-Championship/blob/master/4.png)
-  The comptition is over.
+
+The comptition is over.
