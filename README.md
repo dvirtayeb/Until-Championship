@@ -8,15 +8,16 @@ Use of tools:
 * Software platform: "Javafx"
 
 # Architectue - MVC Model
-![1](https://github.com/dvirtayeb/Until-Championship/blob/master/UntilChampionship_Diagram.drawio.png)
-Kind of game that you can play:
+
+
+# Kind of game that you can play:
 
 ![1.1](https://github.com/dvirtayeb/Until-Championship/blob/master/1.1.png)
 * Tennis
 * Basketball
 * Soccer
 
-Software operation:
+# Software operation:
 * Insert 8 participants( could be names of people or names of teams)
 * Press to "start Championship"
 
