@@ -8,7 +8,7 @@ Use of tools:
 * Software platform: "Javafx"
 
 # Architecture - MVC Model
-![1](https://github.com/dvirtayeb/Until-Championship/blob/master/UntilChampionship_Diagram.drawio%20(3).png)
+![1](https://github.com/dvirtayeb/Until-Championship/blob/master/UntilChampionship_Diagram.drawio%20(4).png)
 
 # Kind of game that you can play:
 
